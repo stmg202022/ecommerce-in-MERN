@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 // const dotenv = require("dotenv");
 
 // dotenv.config({ path: "backend/config/config.env" });
@@ -61,6 +62,7 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+//Generate token using jwt.sign()
 userSchema.methods.getJwtToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
@@ -69,6 +71,14 @@ userSchema.methods.getJwtToken = function () {
 
 userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
+};
+
+//generate token using crypto.randomBytes()
+userSchema.methods.getResetpasswordToken = function () {
+  // const buffer = crypto.randomBytes(20);
+  // const gvalue = crypto.randomBytes(20).toString();
+  const resetToeken = crypto.randomBytes(20).toString("hex");
+  console.log(resetToeken);
 };
 
 module.exports = mongoose.model("User", userSchema);
