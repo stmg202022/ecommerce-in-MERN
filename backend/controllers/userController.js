@@ -228,11 +228,69 @@ exports.userChangeProfile = async (req, res, next) => {
   });
 };
 
-//get ALLUSERS
+//get ALL USERS --admin
 exports.getAllUsers = async (req, res, next) => {
   const users = await User.find();
 
   res.status(200).json({
     users,
   });
+};
+
+//get single user --admin
+exports.getSingleUser = async (req, res, next) => {
+  const id = req.params.id;
+  // console.log(id);
+  try {
+    const user = await User.findById(id);
+    await res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (err) {
+    next(new ErrorHandler(`USER NOT FOUND`, 404));
+  }
+};
+
+// Update role --admin // We will add cloudinary later
+exports.updateUserRole = async (req, res, next) => {
+  const id = req.params.id;
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+    role: req.body.role,
+  };
+
+  try {
+    const user = await User.findByIdAndUpdate(id, newUserData, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+
+    await res.status(200).json({
+      success: true,
+      user,
+    });
+  } catch (err) {
+    next(
+      new ErrorHandler(`USER NOT FOUND WITH THIS ID DUE TO Error: ${err}`, 404)
+    );
+  }
+};
+
+//delete user --admin
+exports.adminDeleteUser = async (req, res, next) => {
+  const id = await req.params.id;
+
+  try {
+    const user = await User.findOneAndDelete({ _id: id });
+    await res.status(200).json({
+      success: true,
+      message: "USER DELETED SUCCESSFULLY.",
+      user,
+    });
+  } catch (err) {
+    next(new ErrorHandler(`USER NOT FOUND WITH THIS ID ${id}`, 404));
+  }
 };
