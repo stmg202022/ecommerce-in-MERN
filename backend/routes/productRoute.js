@@ -26,6 +26,15 @@ router
     isAuthenticatedUser,
     authorizRoles("admin"),
     productController.deleteProduct
-  ); //delete
+  ) //create review
+  .put("/review", isAuthenticatedUser, productController.createProductReviews)
+  //get reviews
+  .get("/reviews", productController.getProductReviews)
+  //delete review
+  .delete(
+    "/reviews",
+    isAuthenticatedUser,
+    productController.deleteProductReview
+  );
 
 exports.router = router;
