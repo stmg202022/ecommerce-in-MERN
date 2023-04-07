@@ -9,7 +9,7 @@ exports.isAuthenticatedUser = async (req, res, next) => {
   // console.log(token);
 
   if (!token) {
-    return next(new ErrorHandler("please Login to Access all product."));
+    return next(new ErrorHandler("please Login First"));
   }
 
   const decodedData = jwt.verify(token, process.env.JWT_SECRET);

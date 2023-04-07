@@ -4,6 +4,7 @@ const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail.js");
 const crypto = require("crypto");
 
+//user REGISTER
 exports.registerUser = async (req, res, next) => {
   const { name, email, password } = req.body;
 
@@ -45,6 +46,7 @@ exports.registerUser = async (req, res, next) => {
     });
 };
 
+//user LOGIN
 exports.userLogin = async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -173,4 +175,64 @@ exports.resetPassword = async (req, res, next) => {
   }
 
   // console.log(user);
+};
+
+//get USER DETAILS
+exports.getUserDetails = async (req, res, next) => {
+  const user = await User.findById(req.user.id); //user.id can be get when login success only
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+};
+
+//user CHANGE/update PASSWORD
+exports.userChangePassword = async (req, res, next) => {
+  const user = await User.findById(req.user.id).select("+password");
+
+  //THIS comparePassword is userSchema.methods.comparePassword
+  const isPasswordMatch = await user.comparePassword(req.body.oldPassword);
+
+  if (!isPasswordMatch) {
+    return await next(new ErrorHandler("Old password is Incorrect.", 401));
+  }
+
+  if (req.body.newPassword !== req.body.confirmPassword) {
+    return await next(new ErrorHandler("Confirm Password Not Match.", 401));
+  }
+
+  user.password = req.body.newPassword;
+
+  await user.save();
+
+  sendToken(user, 200, res);
+};
+
+//user CHANGE/update profile // We will add cloudinary later
+exports.userChangeProfile = async (req, res, next) => {
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+  };
+
+  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+
+  res.status(200).json({
+    success: true,
+    user,
+  });
+};
+
+//get ALLUSERS
+exports.getAllUsers = async (req, res, next) => {
+  const users = await User.find();
+
+  res.status(200).json({
+    users,
+  });
 };

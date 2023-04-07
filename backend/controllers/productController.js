@@ -47,7 +47,7 @@ exports.getAllProducts = async (req, res, next) => {
 
 //GET ONE PRODUCT BY ID
 
-exports.getProduct = async (req, res, next) => {
+exports.getProductDetails = async (req, res, next) => {
   const id = req.params.id;
   console.log(id);
   try {

@@ -5,7 +5,7 @@ const router = express.Router();
 
 router
   .get("/product", productController.getAllProducts) //get all
-  .get("/product/:id", productController.getProduct) //get
+  .get("/product/:id", productController.getProductDetails) //get
   //create
   .post(
     "/product/new",
