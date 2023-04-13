@@ -113,7 +113,7 @@ exports.deleteProduct = async (req, res, next) => {
   }
 };
 
-//create PRODUCT REVIEWS OR UPDATE THE REVIEWS
+//create PRODUCT REVIEWS OR UPDATE THE REVIEWS (C/U)
 exports.createProductReviews = async (req, res, next) => {
   const { rating, comment, productId } = req.body;
 
@@ -134,7 +134,7 @@ exports.createProductReviews = async (req, res, next) => {
     product.reviews.forEach((rev) => {
       //again and again review //update
       if (rev.user.toString() === req.user._id) {
-        (rev.rating = rating), (rev.comment = comment);
+        await((rev.rating = rating)), (rev.comment = comment);
       }
     });
   } else {
@@ -158,6 +158,7 @@ exports.createProductReviews = async (req, res, next) => {
   });
 };
 
+//get PRODUCT REVIEWS (R)
 exports.getProductReviews = async (req, res, next) => {
   const product = await Product.findById(req.query.productId);
 
@@ -170,6 +171,7 @@ exports.getProductReviews = async (req, res, next) => {
   });
 };
 
+//delete PRODUCT REVIEWS (D)
 exports.deleteProductReview = async (req, res, next) => {
   const product = await Product.findById(req.query.productId);
 
