@@ -1,0 +1,74 @@
+@import "./common/styles/variables.css";
+
+/* Navbar CSS */
+.navbar {
+  position: fixed;
+  z-index: 1;
+  background-color: var(--maincolor);
+  height: 80px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.right-navbar {
+  width: 80%;
+}
+
+.right-navbar ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.right-navbar ul li a {
+  text-decoration: none;
+  color: var(--colorText);
+}
+
+.burger {
+  display: none;
+}
+
+.burger.active {
+  color: wheat;
+  display: none;
+}
+
+.cross {
+  display: none;
+}
+
+.cross.active {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .right-navbar {
+    display: none;
+  }
+
+  .burger {
+    display: block;
+  }
+}
+
+.second_navbar {
+  /* display: none; */
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 50%;
+  background-color: #353f54cf;
+  right: -100%;
+  transition: 900ms;
+}
+
+.second_navbar.active {
+  /* display: block; */
+  right: 0%;
+  transition: 900ms;
+}

@@ -1,0 +1,22 @@
+@import "../../common/styles/variables.css";
+
+.footer {
+  background: var(--maincolor);
+  color: var(--colorText);
+}
+
+.footer_parent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 200px;
+}
+
+/* .footer_child {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+} */

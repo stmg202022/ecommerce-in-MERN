@@ -1,0 +1,14 @@
+@import "../../common/styles/variables.css";
+
+.product_title {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+hr {
+  width: 60px;
+  border-bottom: 3px solid;
+  color: var(--maincolor);
+}

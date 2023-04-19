@@ -1,0 +1,45 @@
+@import "../../../common/styles/variables.css";
+
+.card-wrapper {
+  width: max-content;
+  height: max-content;
+  box-shadow: var(--white-shadow);
+  padding: 12px;
+  background-color: #ffffff;
+  transition: all 0.5s;
+}
+
+.card-wrapper:hover {
+  transform: translateY(-0.7vmax);
+  border: 0.5px solid red;
+}
+
+.rounded {
+  border-radius: 4px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.card-header {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.card-image {
+  height: 240px;
+  width: 100%;
+  object-fit: contain;
+}
+
+.card-content {
+  font-family: sans-serif;
+  background-color: aliceblue;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

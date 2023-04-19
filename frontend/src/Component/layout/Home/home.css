@@ -1,0 +1,38 @@
+@import "../../common/styles/variables.css";
+
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: var(--maincolor);
+}
+
+/* .home::before {
+  content: "";
+  width: 100vw;
+  height: 100vmin;
+  background-color: #ffffff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  clip-path: polygon(0 0, 0% 100%, 0 100%, 100% 100%);
+} */
+
+.hero {
+  color: var(--colorText);
+}
+
+/* .title_clip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background-color: royalblue;
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 100%);
+} */
+
+.header,
+.product_card {
+  margin: 50px auto;
+}

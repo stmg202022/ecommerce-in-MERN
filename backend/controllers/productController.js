@@ -42,6 +42,7 @@ exports.getAllProducts = async (req, res, next) => {
   res.status(200).json({
     success: true,
     products,
+    productCount,
   });
 };
 
@@ -49,13 +50,16 @@ exports.getAllProducts = async (req, res, next) => {
 
 exports.getProductDetails = async (req, res, next) => {
   const id = req.params.id;
-  console.log(id);
+
+  const productCount = await Product.countDocuments();
+
+  // console.log(id);
   try {
     const product = await Product.findById(id);
     await res.status(200).json({
       success: true,
       product,
-      productCount, //PRODUCT NOT FOUND IS OCCURING DUE TO THIS productCount
+      productCount,
     });
   } catch (err) {
     // res.status(500).json({ message: `PRODUCT NOT FOUND ${err}` });
