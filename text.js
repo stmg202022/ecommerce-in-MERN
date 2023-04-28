@@ -23,3 +23,7 @@
 //     next();
 //   }
 // });
+
+// ============================================================================
+
+// npm install --save react-alert react-alert-template-basic

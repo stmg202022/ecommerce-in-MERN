@@ -3,6 +3,10 @@
 .footer {
   background: var(--maincolor);
   color: var(--colorText);
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 
 .footer_parent {

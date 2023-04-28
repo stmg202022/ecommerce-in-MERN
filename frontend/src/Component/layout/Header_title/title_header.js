@@ -1,10 +1,10 @@
 import React from "react";
-import "./product.css";
+import "./title_header.css";
 
 const Header = ({ header }) => {
   return (
     <div>
-      <div id="product" className="product_title">
+      <div id="header" className="header">
         <div>
           <h2>{header}</h2>
           <hr />

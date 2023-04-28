@@ -11,8 +11,8 @@ export const linkData = [
     cName: "nav-text",
   },
   {
-    title: "Product",
-    path: "/product",
+    title: "Products",
+    path: "/products",
     icon: <FaIcons.FaCartPlus />,
     cName: "nav-text",
   },

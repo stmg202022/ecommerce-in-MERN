@@ -1,9 +1,9 @@
-@import "./common/styles/variables.css";
+@import "../common/styles/variables.css";
 
 /* Navbar CSS */
 .navbar {
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   background-color: var(--maincolor);
   height: 80px;
   display: flex;

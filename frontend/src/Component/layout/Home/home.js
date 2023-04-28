@@ -1,9 +1,10 @@
 import React from "react";
 import "../Home/home.css";
-import Header from "../Product/title_header";
+import Header from "../Header_title/title_header";
 import ProductList from "../Product/product_list.js";
-import ContactUsPage from "../contact";
-// import Footer from "../Footer/footer";
+import ContactUsPage from "../Contact/contact";
+
+import Footer from "../Footer/footer";
 
 const Home = () => {
   return (
@@ -17,25 +18,27 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="header">
+      <div>
         <div>
           <Header header="Featured Product" />
         </div>
 
-        <div className="product_card">
+        <div className="content">
           <ProductList />
         </div>
       </div>
 
-      <div className="header">
+      <div>
         <div>
           <Header header="Contact Us" />
         </div>
 
-        <div className="product_card">
+        <div className="content">
           <ContactUsPage />
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };

@@ -1,0 +1,21 @@
+.loader {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading {
+  width: 10vmax;
+  height: 10vmax;
+  border-bottom: 5px solid rgb(45, 49, 62);
+  border-radius: 50%;
+  animation: loadingRotate 900ms linear infinite;
+}
+
+@keyframes loadingRotate {
+  to {
+    transform: rotate(-360deg);
+  }
+}

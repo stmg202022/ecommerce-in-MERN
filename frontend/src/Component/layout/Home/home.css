@@ -32,7 +32,6 @@
   clip-path: polygon(0 0, 100% 0, 100% 0, 0 100%);
 } */
 
-.header,
-.product_card {
+.content {
   margin: 50px auto;
 }

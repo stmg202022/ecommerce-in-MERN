@@ -5,10 +5,10 @@ module.exports = (err, req, res, next) => {
   err.message = err.message || "Internal Server Error";
 
   // //WRONG MONGODB ID ERROR
-  // if (err.name === "CaseFrror") {
-  //   const message = `Resource not found. Invalid: ${err.path} `;
-  //   err = new ErrorHandler(message, 400);
-  // }
+  if (err.name === "CastError") {
+    err.message = "Resorce not found";
+    err.statusCode = 404;
+  }
 
   // //MONGOOSE DUPLICATE KEY ERROR
   // if (err.code === 11000) {

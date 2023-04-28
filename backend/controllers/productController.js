@@ -1,3 +1,4 @@
+const catchAsyncError = require("../middleware/catchAsyncError");
 const ErrorHandler = require("../utils/errorHandler");
 
 //this file contain the functions of the all C R U D  and used mongoose shell for document
@@ -6,7 +7,7 @@ const ApiFeatures = require("../utils/apiFeature");
 const Product = require("../model/productModel");
 
 //CREATE
-exports.createProduct = async (req, res, next) => {
+exports.createProduct = catchAsyncError(async (req, res, next) => {
   req.body.user = req.user.id;
   const product = await new Product(req.body);
 
@@ -25,12 +26,13 @@ exports.createProduct = async (req, res, next) => {
 
       // next(new ErrorHandler("PRODUCT NOT CREATED", "401"));
     });
-};
+});
 
 // GET / READ / All products
-exports.getAllProducts = async (req, res, next) => {
-  const resultPerPage = 5;
-  const productCount = await Product.countDocuments();
+exports.getAllProducts = catchAsyncError(async (req, res, next) => {
+  const resultPerPage = 8;
+  const productsCount = await Product.countDocuments();
+
   // console.log(req.query)
   const apiFeature = new ApiFeatures(Product.find(), req.query)
     .search()
@@ -42,33 +44,31 @@ exports.getAllProducts = async (req, res, next) => {
   res.status(200).json({
     success: true,
     products,
-    productCount,
+    productsCount,
   });
-};
+});
 
 //GET ONE PRODUCT BY ID
 
-exports.getProductDetails = async (req, res, next) => {
+exports.getProductDetails = catchAsyncError(async (req, res, next) => {
   const id = req.params.id;
 
-  const productCount = await Product.countDocuments();
-
   // console.log(id);
+
   try {
     const product = await Product.findById(id);
     await res.status(200).json({
       success: true,
       product,
-      productCount,
     });
   } catch (err) {
     // res.status(500).json({ message: `PRODUCT NOT FOUND ${err}` });
     next(new ErrorHandler(`PRODUCT NOT FOUND`, 404));
   }
-};
+});
 
 //UPDATE
-exports.updateProduct = async (req, res, next) => {
+exports.updateProduct = catchAsyncError(async (req, res, next) => {
   const id = req.params.id;
 
   try {
@@ -97,9 +97,9 @@ exports.updateProduct = async (req, res, next) => {
 
   // product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true})
   // res.status(200).json(product)
-};
+});
 
-exports.deleteProduct = async (req, res, next) => {
+exports.deleteProduct = catchAsyncError(async (req, res, next) => {
   try {
     const id = await req.params.id;
     const product = await Product.findOneAndDelete({ _id: id }); // require this conditions
@@ -115,10 +115,10 @@ exports.deleteProduct = async (req, res, next) => {
 
     next(new ErrorHandler("PRODUCT NOT FOUND", 404));
   }
-};
+});
 
 //create PRODUCT REVIEWS OR UPDATE THE REVIEWS (C/U)
-exports.createProductReviews = async (req, res, next) => {
+exports.createProductReviews = catchAsyncError(async (req, res, next) => {
   const { rating, comment, productId } = req.body;
 
   const review = {
@@ -160,10 +160,10 @@ exports.createProductReviews = async (req, res, next) => {
     success: true,
     product,
   });
-};
+});
 
 //get PRODUCT REVIEWS (R)
-exports.getProductReviews = async (req, res, next) => {
+exports.getProductReviews = catchAsyncError(async (req, res, next) => {
   const product = await Product.findById(req.query.productId);
 
   if (!product) {
@@ -173,10 +173,10 @@ exports.getProductReviews = async (req, res, next) => {
   res.status(200).json({
     reviews: product.reviews,
   });
-};
+});
 
 //delete PRODUCT REVIEWS (D)
-exports.deleteProductReview = async (req, res, next) => {
+exports.deleteProductReview = catchAsyncError(async (req, res, next) => {
   const product = await Product.findById(req.query.productId);
 
   if (!product) {
@@ -206,4 +206,4 @@ exports.deleteProductReview = async (req, res, next) => {
   res.status(200).json({
     success: true,
   });
-};
+});

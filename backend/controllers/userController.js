@@ -1,12 +1,17 @@
 const User = require("../model/userModel");
+const catchAsyncError = require("../middleware/catchAsyncError");
 const ErrorHandler = require("../utils/errorHandler");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail.js");
 const crypto = require("crypto");
 
 //user REGISTER
-exports.registerUser = async (req, res, next) => {
+exports.registerUser = catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
+
+  if (!name || !email || !password) {
+    return next(new ErrorHandler("PLEASE FILL UP THE ALL REQUIREMENT", 404));
+  }
 
   const user = new User({
     name,
@@ -39,15 +44,15 @@ exports.registerUser = async (req, res, next) => {
 
       next(
         new ErrorHandler(
-          "ALREADY HAVE BEEN REGISTER BY USING THIS EMAIL OR PASSWORD",
+          "ALREADY CREATED USING THIS ACCOUNT. PLEASE TRY AGAIN WITH USING ANOTHER ACCOUNT.",
           401
         )
       );
     });
-};
+});
 
 //user LOGIN
-exports.userLogin = async (req, res, next) => {
+exports.userLogin = catchAsyncError(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -75,10 +80,10 @@ exports.userLogin = async (req, res, next) => {
   // });
 
   sendToken(user, 200, res);
-};
+});
 
 //LOGOUT Case
-exports.logOut = async (req, res, next) => {
+exports.logOut = catchAsyncError(async (req, res, next) => {
   res.cookie("token", null, {
     expires: new Date(Date.now()),
     httpOnly: true,
@@ -88,10 +93,10 @@ exports.logOut = async (req, res, next) => {
     success: true,
     message: "LOGOUT SUCCESS",
   });
-};
+});
 
 //Forgot Password
-exports.forgotPassword = async (req, res, next) => {
+exports.forgotPassword = catchAsyncError(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
@@ -135,10 +140,10 @@ exports.forgotPassword = async (req, res, next) => {
 
     return next(new ErrorHandler(error.message, 500));
   }
-};
+});
 
 //Reset Password
-exports.resetPassword = async (req, res, next) => {
+exports.resetPassword = catchAsyncError(async (req, res, next) => {
   //
 
   console.log(req.params.token);
@@ -175,20 +180,20 @@ exports.resetPassword = async (req, res, next) => {
   }
 
   // console.log(user);
-};
+});
 
 //get USER DETAILS
-exports.getUserDetails = async (req, res, next) => {
+exports.getUserDetails = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user.id); //user.id can be get when login success only
 
   res.status(200).json({
     success: true,
     user,
   });
-};
+});
 
 //user CHANGE/update PASSWORD
-exports.userChangePassword = async (req, res, next) => {
+exports.userChangePassword = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user.id).select("+password");
 
   //THIS comparePassword is userSchema.methods.comparePassword
@@ -207,10 +212,10 @@ exports.userChangePassword = async (req, res, next) => {
   await user.save();
 
   sendToken(user, 200, res);
-};
+});
 
 //user CHANGE/update profile // We will add cloudinary later
-exports.userChangeProfile = async (req, res, next) => {
+exports.userChangeProfile = catchAsyncError(async (req, res, next) => {
   const newUserData = {
     name: req.body.name,
     email: req.body.email,
@@ -226,19 +231,19 @@ exports.userChangeProfile = async (req, res, next) => {
     success: true,
     user,
   });
-};
+});
 
 //get ALL USERS --admin
-exports.getAllUsers = async (req, res, next) => {
+exports.getAllUsers = catchAsyncError(async (req, res, next) => {
   const users = await User.find();
 
   res.status(200).json({
     users,
   });
-};
+});
 
 //get single user --admin
-exports.getSingleUser = async (req, res, next) => {
+exports.getSingleUser = catchAsyncError(async (req, res, next) => {
   const id = req.params.id;
   // console.log(id);
   try {
@@ -250,10 +255,10 @@ exports.getSingleUser = async (req, res, next) => {
   } catch (err) {
     next(new ErrorHandler(`USER NOT FOUND`, 404));
   }
-};
+});
 
 // Update role --admin // We will add cloudinary later
-exports.updateUserRole = async (req, res, next) => {
+exports.updateUserRole = catchAsyncError(async (req, res, next) => {
   const id = req.params.id;
   const newUserData = {
     name: req.body.name,
@@ -277,10 +282,10 @@ exports.updateUserRole = async (req, res, next) => {
       new ErrorHandler(`USER NOT FOUND WITH THIS ID DUE TO Error: ${err}`, 404)
     );
   }
-};
+});
 
 //delete user --admin
-exports.adminDeleteUser = async (req, res, next) => {
+exports.adminDeleteUser = catchAsyncError(async (req, res, next) => {
   const id = await req.params.id;
 
   try {
@@ -293,4 +298,4 @@ exports.adminDeleteUser = async (req, res, next) => {
   } catch (err) {
     next(new ErrorHandler(`USER NOT FOUND WITH THIS ID ${id}`, 404));
   }
-};
+});

@@ -1,6 +1,6 @@
 @import "../../common/styles/variables.css";
-
-.product_title {
+.header {
+  margin: 50px auto;
   background-color: white;
   display: flex;
   justify-content: center;

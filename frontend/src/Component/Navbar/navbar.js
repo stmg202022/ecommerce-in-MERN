@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { linkData } from "../Component/linkData/linkData";
-import "../../src/App.css";
+import { linkData } from "../linkData/linkData";
+import "../../App.css";
 import { IconContext } from "react-icons";
-import meroshop from "../images/meroshop.png";
+import meroshop from "../../images/meroshop.png";
 // import { Container } from "@mui/material";
-import "../Component/navbar.css";
+import "../Navbar/navbar.css";
 
 function Navbar() {
   const [burger, setBurger] = useState(true);
