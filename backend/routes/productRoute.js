@@ -4,7 +4,7 @@ const { isAuthenticatedUser, authorizRoles } = require("../middleware/auth");
 const router = express.Router();
 
 router
-  .get("/product", productController.getAllProducts) //get all
+  .get("/products", productController.getAllProducts) //get all
   .get("/product/:id", productController.getProductDetails) //get
   //create
   .post(

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
+import * as CgIcons from "react-icons/cg";
 import { Link } from "react-router-dom";
 import { linkData } from "../linkData/linkData";
 import "../../App.css";
@@ -37,6 +38,12 @@ function Navbar() {
                   );
                 })}
               </ul>
+            </div>
+
+            <div>
+              <Link to="products/search">
+                <CgIcons.CgSearch />
+              </Link>
             </div>
 
             <div className="burger-main">

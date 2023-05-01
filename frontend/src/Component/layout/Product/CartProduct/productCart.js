@@ -21,7 +21,7 @@ const ProductCard = ({ rounded, clickable, product }) => {
   return (
     <>
       <Link
-        to={`/products/${_id}`}
+        to={`/product/${_id}`}
         onClick={() => dispatch(getProductDetails({ _id }))}
         style={{ margin: "15px", flexBasis: "20%", textDecoration: "none" }}
         className={`card-wrapper ${rounded ? "rounded" : ""} ${

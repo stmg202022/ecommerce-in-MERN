@@ -15,16 +15,16 @@ const Product = () => {
   // }, [dispatch]);
 
   return (
-    <div id="products" className="products">
-      <div>
-        <Header header="Featured Product" />
+    <div>
+      <div id="products" className="products">
+        <div>
+          <Header header="Featured Product" />
+        </div>
+        <div>
+          <ProductList />
+        </div>
+        <Footer />
       </div>
-
-      <div>
-        <ProductList />
-      </div>
-
-      <Footer />
     </div>
   );
 };

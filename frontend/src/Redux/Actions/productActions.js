@@ -11,21 +11,25 @@ import {
 import axios from "axios";
 
 //GETING ALL PRODUCT
-export const getProducts = () => async (dispatch) => {
-  try {
-    await dispatch({ type: ALL_PRODUCT_REQUEST });
+export const getProducts =
+  (keyword = "", currentPage = 1) =>
+  async (dispatch) => {
+    try {
+      await dispatch({ type: ALL_PRODUCT_REQUEST });
 
-    const { data } = await axios.get("http://localhost:8080/api/v1/product");
+      const { data } = await axios.get(
+        `http://localhost:8080/api/v1/products?keyword=${keyword}&page=${currentPage}`
+      );
 
-    await dispatch({ type: ALL_PRODUCT_SUCCESS, payload: data });
+      await dispatch({ type: ALL_PRODUCT_SUCCESS, payload: data });
 
-    // console.log(data);
-  } catch (err) {
-    dispatch({ type: ALL_PRODUCT_FAIL, payload: err.response.data.message });
-  }
-};
+      // console.log(data);
+    } catch (err) {
+      dispatch({ type: ALL_PRODUCT_FAIL, payload: err.response.data.message });
+    }
+  };
 
-//GETING A PRODUCT DETAIL
+//GETING A PRODUCT DETAIL //single product
 export const getProductDetails =
   ({ id }) =>
   async (dispatch) => {

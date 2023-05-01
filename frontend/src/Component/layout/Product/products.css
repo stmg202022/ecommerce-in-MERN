@@ -1,4 +1,11 @@
 .products {
   margin-top: 100px;
   position: absolute;
+  width: 100%;
+}
+
+.filterBox {
+  width: 300px;
+  position: relative;
+  left: 30px;
 }

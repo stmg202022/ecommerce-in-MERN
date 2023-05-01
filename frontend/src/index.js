@@ -14,6 +14,8 @@ import About from "./Component/layout/About/about";
 import Contact from "./Component/layout/Contact/contact";
 import ProductDetails from "./Component/layout/Product/ProductDetail/product_details";
 
+import Search from "./Component/layout/Search/search";
+
 // import { positions, transition, Provider as AlertProvider } from "react-alert";
 
 import { ToastContainer } from "react-toastify";
@@ -27,10 +29,16 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+
       {
         path: "products",
         element: <Products />,
       },
+      {
+        path: "/products/:keyword",
+        element: <Products />,
+      },
+
       {
         path: "contact",
         element: <Contact />,
@@ -44,8 +52,13 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/products/:id",
+        path: "/product/:id",
         element: <ProductDetails />,
+      },
+
+      {
+        element: <Search />,
+        path: "/products/search",
       },
     ],
   },
