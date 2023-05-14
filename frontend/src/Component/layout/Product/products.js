@@ -1,13 +1,15 @@
 import React from "react";
-import ProductList from "./product_list";
+// import ProductList from "./product_list";
 import Header from "../Header_title/title_header";
 import "./products.css";
 // import { useDispatch } from "react-redux";
 // import { getProducts } from "../../../Redux/Actions/productActions";
 
+// import Features from "./product_features/features";
+
 import Footer from "../Footer/footer";
 
-const Product = () => {
+const Products = () => {
   // const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -21,7 +23,8 @@ const Product = () => {
           <Header header="Featured Product" />
         </div>
         <div>
-          <ProductList />
+          {/* <Features /> */}
+          {/* <ProductList /> */}
         </div>
         <Footer />
       </div>
@@ -29,4 +32,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Products;

@@ -1,0 +1,39 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0px;
+}
+
+.page-item {
+  background-color: rgb(225, 225, 225);
+  list-style: none;
+  /* border: 1px solid; */
+  transition: all 0.3s;
+  cursor: pointer;
+  padding: 10px 15px;
+}
+
+.page-item:first-child {
+  border-radius: 5px 0px 0px 5px;
+}
+
+.page-item:last-child {
+  border-radius: 0px 5px 5px 0px;
+}
+
+.page-item:hover {
+  background-color: rgb(215, 156, 156);
+}
+
+.page-link {
+  text-decoration: none;
+}
+
+.pageItemActive {
+  background-color: rgb(214, 117, 117);
+}
+
+.pageLinkActive {
+  color: white;
+}

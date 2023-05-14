@@ -10,16 +10,27 @@ import {
 
 import axios from "axios";
 
-//GETING ALL PRODUCT
 export const getProducts =
-  (keyword = "", currentPage = 1) =>
+  (currentPage, keyword = "", price = [0, 300000], ratings, category) =>
   async (dispatch) => {
     try {
       await dispatch({ type: ALL_PRODUCT_REQUEST });
 
-      const { data } = await axios.get(
-        `http://localhost:8080/api/v1/products?keyword=${keyword}&page=${currentPage}`
-      );
+      // console.log(currentPage);
+      // console.log(keyword);
+      // console.log(price);
+      // console.log(ratings);
+      // console.log(category);
+
+      let link = `http://localhost:8080/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+
+      if (category) {
+        link = `http://localhost:8080/api/v1/products?category=${category}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+      }
+
+      const { data } = await axios.get(link);
+
+      // console.log(link);
 
       await dispatch({ type: ALL_PRODUCT_SUCCESS, payload: data });
 
@@ -51,6 +62,37 @@ export const getProductDetails =
       // console.log(error.response.data.message);
     }
   };
+
+// // //GETING ALL PRODUCT
+// // export const getProducts =
+// //   (keyword = "", currentPage, price = [0, 300000], category, ratings) =>
+// //   async (dispatch) => {
+// //     try {
+// //       await dispatch({ type: ALL_PRODUCT_REQUEST });
+
+// //       let link = `http://localhost:8080/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+
+// //       // if (keyword) {
+// //       //   link = `http://localhost:8080/api/v1/products?keyword=${keyword}&page=${currentPage}`;
+// //       // } else if (price && category && ratings) {
+// //       //   link = `http://localhost:8080/api/v1/products?&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
+// //       // }
+
+// //       if (category) {
+// //         link = `http://localhost:8080/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
+// //       }
+
+// //       const { data } = await axios.get(link);
+
+// //       // console.log(link);
+
+// //       await dispatch({ type: ALL_PRODUCT_SUCCESS, payload: data });
+
+// //       // console.log(data);
+// //     } catch (err) {
+// //       dispatch({ type: ALL_PRODUCT_FAIL, payload: err.response.data.message });
+// //     }
+// //   };
 
 //CLEARING ERROR
 export const clearError = () => async (dispatch) => {

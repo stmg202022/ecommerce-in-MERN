@@ -27,3 +27,24 @@
 // ============================================================================
 
 // npm install --save react-alert react-alert-template-basic
+
+// {
+//   resultPerPage < count && (
+//     <div className="pagination">
+//       <Pagination
+//         activePage={currentPage} //1
+//         itemsCountPerPage={resultPerPage} // 8 so, 20 /8 === 2 page and 4 product {1 } {2}
+//         totalItemsCount={productsCount} //number of product 20
+//         onChange={setCurrentPageNo}
+//         nextPageText="Next"
+//         prevPageText="Prev"
+//         firstPageText="1st"
+//         lastPageText="Last"
+//         itemClass="page-item"
+//         linkClass="page-link"
+//         activeClass="pageItemActive"
+//         activeLinkClass="pageLinkActive"
+//       />
+//     </div>
+//   );
+// }

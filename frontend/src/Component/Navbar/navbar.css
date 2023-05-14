@@ -47,7 +47,8 @@
 
 @media (max-width: 768px) {
   .right-navbar {
-    display: none;
+    /* display: none; */
+    display: block;
   }
 
   .burger {

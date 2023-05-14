@@ -1,10 +1,12 @@
 import React from "react";
 import "../Home/home.css";
 import Header from "../Header_title/title_header";
-import ProductList from "../Product/product_list.js";
 import ContactUsPage from "../Contact/contact";
+// import Features from "../Product/product_features/features";
+// import ProductList from "../Product/product_list.js";
 
 import Footer from "../Footer/footer";
+import ProductList from "../Products/ProductList/product_list";
 
 const Home = () => {
   return (

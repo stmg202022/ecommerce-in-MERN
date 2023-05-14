@@ -18,43 +18,56 @@ import "react-toastify/dist/ReactToastify.css";
 
 import "./product_list.css";
 
-const valuetext = (value) => {
-  return `NRS ${value}`;
-};
+const categories = ["Smartphones", "Bike", "Laptop", "Camera"];
 
 const ProductList = () => {
   const dispatch = useDispatch();
-  const { keyword } = useParams();
+  // const navigate = useNavigate();
+  let { keyword } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
-  const [priceRange, setPriceRange] = useState([0, 100]);
+  const [price, setPrice] = useState([0, 300000]);
+  const [category, setCategory] = useState("");
+  const [ratings, setRatings] = useState(0);
 
-  const { loading, error, products, productsCount, resultPerPage } =
-    useSelector((state) => state.products);
+  const {
+    loading,
+    error,
+    products,
+    productsCount,
+    resultPerPage,
+    // filteredProductsCount,
+  } = useSelector((state) => state.products);
 
-  console.log(keyword);
+  // console.log(filteredProductsCount);
+  // console.log(resultPerPage);
 
   useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearError());
     }
-    dispatch(getProducts(keyword, currentPage));
-  }, [dispatch, error, keyword, currentPage]);
+    dispatch(getProducts(keyword, price, category, ratings)); //currentPage
+  }, [dispatch, error, keyword, price, category, ratings]); //currentPage
+
+  // let count = filteredProductsCount;
 
   const setCurrentPageNo = (e) => {
     setCurrentPage(e);
+    // console.log(e);
   };
 
   //Slider
-  const getPriceRangeLabel = (value) => {
-    return `$${value}`;
+
+  const handlePriceChange = (event, newValue) => {
+    setPrice(newValue);
+    //
   };
 
-  console.log(valuetext());
+  // const getPriceRangeLabel = (value) => {
+  //   return `$${value}`;
+  // };
 
-  const handlePriceRangeChange = (event, newValue) => {
-    setPriceRange(newValue);
-  };
+  // console.log(getPriceRangeLabel());
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -73,15 +86,52 @@ const ProductList = () => {
           }}
         >
           <div className="filterBox">
-            <Typography>Price</Typography>
-            <Slider
-              value={priceRange}
-              onChange={handlePriceRangeChange}
-              min={0}
-              max={2500}
-              valueLabelDisplay="auto"
-              getAriaValueText={getPriceRangeLabel}
-            />
+            <div style={{ width: "300px" }}>
+              <Typography>Price</Typography>
+              <Slider
+                value={price}
+                onChange={handlePriceChange}
+                min={0}
+                max={300000}
+                valueLabelDisplay="auto"
+                size="small"
+                getAriaLabel={(index) =>
+                  `${index === 0 ? "Minimum" : "Maximum"} price`
+                }
+                // getAriaValueText={getPriceRangeLabel}
+              />
+            </div>
+
+            <div>
+              <Typography>Category</Typography>
+              <ul className="categoryBox">
+                {categories.map((category) => (
+                  <li
+                    className="category-link"
+                    key={category}
+                    onClick={() => setCategory(category)}
+                  >
+                    {category}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="rating">
+              <Typography>Rating Above:</Typography>
+              <Slider
+                value={ratings}
+                onChange={(e, newValue) => {
+                  setRatings(newValue);
+                  console.log(newValue);
+                }}
+                size="small"
+                aria-label="Small"
+                valueLabelDisplay="auto"
+                min={0}
+                max={5}
+              />
+            </div>
           </div>
 
           <div
@@ -100,30 +150,34 @@ const ProductList = () => {
                   key={product._id}
                 />
               ))}
+
+            {resultPerPage < productsCount && (
+              <div className="pagination">
+                <Pagination
+                  activePage={currentPage}
+                  onChange={setCurrentPageNo}
+                  itemsCountPerPage={resultPerPage}
+                  totalItemsCount={productsCount}
+                  nextPageText="Next"
+                  prevPageText="Prev"
+                  firstPageText="1st"
+                  lastPageText="Last"
+                  itemClass="page-item"
+                  linkClass="page-link"
+                  activeClass="pageItemActive"
+                  activeLinkClass="pageLinkActive"
+                />
+              </div>
+            )}
+
+            {products.length === 0 && (
+              <div style={{ margin: "20px 0px" }}>
+                <h2>PRODUCT NOT FOUND!</h2>
+              </div>
+            )}
           </div>
         </div>
       )}
-
-      <div className="pagination">
-        {resultPerPage < productsCount && (
-          <Pagination
-            activePage={currentPage} //1
-            totalItemsCount={productsCount} //number of product 20
-            itemsCountPerPage={resultPerPage} // 8 so, 20 /8 === 2 page and 4 product {1 } {2}
-            // // totalItemsCount={items.length}
-            // // pageRangeDisplayed={5}
-            onChange={setCurrentPageNo}
-            nextPageText="Next"
-            prevPageText="Prev"
-            firstPageText="1st"
-            lastPageText="Last"
-            itemClass="page-item"
-            linkClass="page-link"
-            activeClass="pageItemActive"
-            activeLinkClass="pageLinkActive"
-          />
-        )}
-      </div>
     </div>
   );
 };

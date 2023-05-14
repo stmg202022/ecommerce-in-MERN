@@ -1,5 +1,5 @@
 import React from "react";
-import "../CartProduct/productCart.css";
+import "./productCart.css";
 import { Link } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import { getProductDetails } from "../../../../Redux/Actions/productActions";

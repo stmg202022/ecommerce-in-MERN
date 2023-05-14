@@ -9,7 +9,7 @@ const Product = require("../model/productModel");
 //CREATE
 exports.createProduct = catchAsyncError(async (req, res, next) => {
   req.body.user = req.user.id;
-  const product = await new Product(req.body);
+  const product = new Product(req.body);
 
   product
     .save()
@@ -30,23 +30,39 @@ exports.createProduct = catchAsyncError(async (req, res, next) => {
 
 // GET / READ / All products
 exports.getAllProducts = catchAsyncError(async (req, res, next) => {
-  const resultPerPage = 4;
-  const productsCount = await Product.countDocuments();
+  try {
+    const resultPerPage = 8;
+    const productsCount = await Product.countDocuments();
 
-  // console.log(req.query)
-  const apiFeature = new ApiFeatures(Product.find(), req.query)
-    .search()
-    .filter()
-    .pagination(resultPerPage);
+    // console.log(req.query)
+    const apiFeature = new ApiFeatures(Product.find(), req.query)
+      .search()
+      .filter()
+      .pagination(resultPerPage);
 
-  const products = await apiFeature.query;
-  // const products = await Product.find();
-  res.status(200).json({
-    success: true,
-    products,
-    productsCount,
-    resultPerPage,
-  });
+    // let products = await apiFeature.query;
+
+    // let filteredProductsCount = products.length;
+
+    // apiFeature.pagination(resultPerPage);
+
+    // products = await apiFeature.query;
+
+    let products = await apiFeature.query;
+
+    // console.log(products);
+
+    // const products = await Product.find();
+    res.status(200).json({
+      success: true,
+      products,
+      productsCount,
+      resultPerPage,
+      // filteredProductsCount,
+    });
+  } catch (err) {
+    next(new ErrorHandler(`error:${err}`));
+  }
 });
 
 //GET ONE PRODUCT BY ID

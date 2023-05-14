@@ -22,7 +22,7 @@ class ApiFeatures {
   filter() {
     const copyQuery = { ...this.queryStr };
 
-    console.log(copyQuery);
+    // console.log(copyQuery);
 
     //filter for categories
     const removeQuery = ["keyword", "page", "limit"]; //categories not remove by this filter fn when categories send
@@ -53,9 +53,9 @@ class ApiFeatures {
 
   pagination(resultPerPage) {
     console.log(typeof this.queryStr.page);
-    const currentPage = Number(this.queryStr.page) || 1;
+    let currentPage = Number(this.queryStr.page) || 1;
 
-    console.log(currentPage);
+    // console.log(currentPage);
 
     let skip = resultPerPage * (currentPage - 1); // 0, 5, 10, 15
 
