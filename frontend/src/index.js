@@ -16,7 +16,7 @@ import ProductSearch from "./Component/layout/Products/ProductSearch/product_sea
 
 import Search from "./Component/layout/Search/search";
 
-import Login from "./Component/layout/Login/login";
+import LoginSignUp from "./Component/user/userLoginSignUp/userLoginSignUp";
 import About from "./Component/layout/About/about";
 import Contact from "./Component/layout/Contact/contact";
 
@@ -55,7 +55,7 @@ const router = createBrowserRouter([
       },
       {
         path: "login",
-        element: <Login />,
+        element: <LoginSignUp />,
       },
       {
         path: "/product/:id",
