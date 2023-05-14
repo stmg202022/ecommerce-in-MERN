@@ -1,7 +1,146 @@
-.userLoginSignUp {
+.userLoginSignUpContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   width: 100%;
+  background-color: rgb(231, 231, 231);
+  /* position: fixed;
+  top: 0;
+  left: 0; */
+}
+
+.loginSignUpBox {
+  background-color: white;
+  width: 25vw;
+  height: 70vh;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 10px 20px;
+}
+
+.login_signUp_toggle {
+  display: flex;
+  height: 3vmax;
+}
+
+.login_signUp_toggle > p {
+  color: rgb(0, 0, 0, 0.678);
+  transition: all 0.5s;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  width: 100%;
+}
+
+.login_signUp_toggle > p:hover {
+  color: red;
+}
+
+.loginSignUpBox > div > Button {
+  background-color: tomato;
+  height: 1px;
+  width: 50%;
+  padding: 2px;
+  transition: all 0.5s;
+}
+
+.loginForm,
+.signUpForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: auto;
+  height: 70%;
+  transition: all 0.5s;
+}
+
+.signUpForm {
+  transform: translateY(-100%) translateX(100vmax);
+}
+
+.loginForm > div,
+.signUpForm > div {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.loginForm > div > input,
+.signUpForm > div > input {
+  padding: 1vmax 4vmax;
+  padding-right: 1vmax;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.267);
+  outline: none;
+}
+
+.loginForm > div > svg,
+.signUpForm > div > svg {
+  position: absolute;
+  transform: translate(1vmax);
+  /* color: rgba(0, 0, 0, 0.267); */
+}
+
+.loginForm > a {
+  color: rgb(0, 0, 0, 0.651);
+  text-decoration: none;
+  align-self: flex-end;
+  transition: all 0.5s;
+}
+
+.loginForm > a:hover {
+  color: black;
+}
+
+.loginBtn,
+.signUpBtn {
+  background-color: tomato;
+  font-size: 20px;
+  color: white;
+  width: 100%;
+  padding: 0.8vmax;
+  cursor: pointer;
+  transition: all 0.5s;
+  outline: none;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
+}
+
+.loginBtn:hover,
+.signUpBtn:hover {
+  background-color: rgb(179, 66, 45);
+}
+
+/* shifting */
+
+.shiftToLeft {
+  transform: translateX(-200%);
+}
+
+.shiftToNeutral {
+  transform: translateX(0%);
+}
+
+.shiftToNeutralForm {
+  transform: translateX(0%) translateY(-100%);
+}
+.shiftToRight {
+  transform: translateX(100%);
+}
+
+#registerImage > img {
+  width: 3vmax;
+  border-radius: 100%;
+}
+
+#registerImage > input {
+  display: flex;
+  padding: 0%;
+}
+
+#registerImage > input::file-selector-button {
+  cursor: pointer;
 }
