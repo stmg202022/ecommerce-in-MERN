@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import "./userLoginSignUp.css";
 
 import { Link } from "react-router-dom";
@@ -11,7 +11,33 @@ import EmailIcon from "@mui/icons-material/Email";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import AddReactionIcon from "@mui/icons-material/AddReaction";
 
+//login Data sending/req.body  and receiving/res.data
+import { useDispatch, useSelector } from "react-redux";
+import {
+  login,
+  clearUserErrors,
+  register,
+} from "../../../Redux/Actions/userActions";
+
+//when login loading...
+import Loader from "../../layout/Loader/loader";
+
+//When login errorr...
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+//When login Success...
+import { useNavigate } from "react-router-dom";
+
 const UserLoginSignUp = () => {
+  //using useDispatch and useSelector for login/signUp data
+  const dispatch = useDispatch();
+  const { loading, isAuthenticated, error } = useSelector(
+    (state) => state.user
+  );
+
+  const navigate = useNavigate();
+
   //useRef Hook of react
   const loginTab = useRef(null); //formRef
   const switcherTab = useRef(null); //buttonRef
@@ -32,6 +58,17 @@ const UserLoginSignUp = () => {
   //image upload case
   const [avatar, setAvatar] = useState();
   const [avatarPreview, setAvatarPreview] = useState("/logo192.png");
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearUserErrors());
+    }
+
+    if (isAuthenticated) {
+      navigate("/account");
+    }
+  }, [dispatch, error, navigate, isAuthenticated]);
 
   //
   const switchTabs = (e, tab) => {
@@ -57,7 +94,11 @@ const UserLoginSignUp = () => {
   };
 
   //loginSubmit for form submit
-  const loginSubmit = () => {
+  const loginSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(login(loginEmail, loginPassword));
+
     console.log("Form submited.");
   };
 
@@ -71,7 +112,10 @@ const UserLoginSignUp = () => {
     myForm.set("email", email);
     myForm.set("password", password);
     myForm.set("avatar", avatar);
+
     console.log("register form submit.");
+
+    dispatch(register(myForm));
   };
 
   const registerDataChange = (e) => {
@@ -95,113 +139,117 @@ const UserLoginSignUp = () => {
   //
   return (
     <Fragment>
-      <div className="userLoginSignUpContainer">
-        <div className="loginSignUpBox">
-          <div>
-            <div className="login_signUp_toggle">
-              <p onClick={(e) => switchTabs(e, "login")}>LOGIN</p>
-              <p onClick={(e) => switchTabs(e, "register")}>REGISTER</p>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="userLoginSignUpContainer">
+          <div className="loginSignUpBox">
+            <div>
+              <div className="login_signUp_toggle">
+                <p onClick={(e) => switchTabs(e, "login")}>LOGIN</p>
+                <p onClick={(e) => switchTabs(e, "register")}>REGISTER</p>
+              </div>
+              <Button ref={switcherTab}></Button>
             </div>
-            <Button ref={switcherTab}></Button>
+
+            <form
+              action=""
+              className="loginForm"
+              ref={loginTab}
+              onSubmit={loginSubmit}
+            >
+              <div className="loginEmail">
+                <EmailIcon />
+                <input
+                  type="email"
+                  className="email"
+                  placeholder="Email"
+                  required
+                  value={loginEmail}
+                  onChange={(e) => setLoginEmail(e.target.value)}
+                />
+              </div>
+
+              <div className="loginPassword">
+                <LockOpenIcon />
+                <input
+                  type="password"
+                  className="password"
+                  placeholder="Password"
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                />
+              </div>
+
+              <Link to="/password/forgot">Forgot Password ?</Link>
+              <input type="submit" value="Login" className="loginBtn" />
+            </form>
+
+            <form
+              action=""
+              className="signUpForm"
+              ref={registerTab}
+              encType="multipart/form-data" //we are going to upload user images so..
+              onSubmit={registerSubmit}
+            >
+              <div className="signUpName">
+                <AddReactionIcon />
+                <input
+                  type="text"
+                  name="name"
+                  className="name"
+                  placeholder="Name"
+                  required
+                  value={name}
+                  onChange={registerDataChange}
+                />
+              </div>
+
+              <div className="signUpEmail">
+                <EmailIcon />
+                <input
+                  type="email"
+                  name="email"
+                  className="email"
+                  placeholder="Email"
+                  required
+                  value={email}
+                  onChange={registerDataChange}
+                />
+              </div>
+
+              <div className="signUpPassword">
+                <LockOpenIcon />
+                <input
+                  type="password"
+                  name="password"
+                  className="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={registerDataChange}
+                />
+              </div>
+
+              <div id="registerImage">
+                <img src={avatarPreview} alt="Avatar Preview" />
+                <input
+                  type="file"
+                  className="avatar"
+                  name="avatar"
+                  accept="image/*"
+                  onChange={registerDataChange}
+                />
+              </div>
+              <input
+                type="submit"
+                value="Register"
+                className="signUpBtn"
+                // disabled={loading ? true : false}
+              />
+            </form>
           </div>
-
-          <form
-            action=""
-            className="loginForm"
-            ref={loginTab}
-            onSubmit={loginSubmit}
-          >
-            <div className="loginEmail">
-              <EmailIcon />
-              <input
-                type="email"
-                className="email"
-                placeholder="Email"
-                required
-                value={loginEmail}
-                onChange={(e) => setLoginEmail(e.target.value)}
-              />
-            </div>
-
-            <div className="loginPassword">
-              <LockOpenIcon />
-              <input
-                type="password"
-                className="password"
-                placeholder="Password"
-                value={loginPassword}
-                onChange={(e) => setLoginPassword(e.target.value)}
-              />
-            </div>
-
-            <Link to="/password/forgot">Forgot Password ?</Link>
-            <input type="submit" value="Login" className="loginBtn" />
-          </form>
-
-          <form
-            action=""
-            className="signUpForm"
-            ref={registerTab}
-            encType="multipart/form-data" //we are going to upload user images so..
-            onSubmit={registerSubmit}
-          >
-            <div className="signUpName">
-              <AddReactionIcon />
-              <input
-                type="text"
-                name="name"
-                className="name"
-                placeholder="Name"
-                required
-                value={name}
-                onChange={registerDataChange}
-              />
-            </div>
-
-            <div className="signUpEmail">
-              <EmailIcon />
-              <input
-                type="email"
-                name="email"
-                className="email"
-                placeholder="Email"
-                required
-                value={email}
-                onChange={registerDataChange}
-              />
-            </div>
-
-            <div className="signUpPassword">
-              <LockOpenIcon />
-              <input
-                type="password"
-                name="password"
-                className="password"
-                placeholder="Password"
-                value={password}
-                onChange={registerDataChange}
-              />
-            </div>
-
-            <div id="registerImage">
-              <img src={avatarPreview} alt="Avatar Preview" />
-              <input
-                type="file"
-                className="avatar"
-                name="avatar"
-                accept="image/*"
-                onChange={registerDataChange}
-              />
-            </div>
-            <input
-              type="submit"
-              value="Register"
-              className="signUpBtn"
-              // disabled={loading ? true : false}
-            />
-          </form>
         </div>
-      </div>
+      )}
     </Fragment>
   );
 };
