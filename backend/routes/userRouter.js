@@ -16,7 +16,10 @@ const {
 const router = express.Router();
 const { isAuthenticatedUser, authorizRoles } = require("../middleware/auth");
 
+// const upload = multer({ dest: "uploads/" });
+
 router.post("/register", registerUser); //create
+
 router.post("/login", userLogin);
 router.post("/logout", logOut);
 router.post("/password/forgot", forgotPassword);

@@ -102,22 +102,6 @@ const UserLoginSignUp = () => {
     console.log("Form submited.");
   };
 
-  //registerSubmit
-  const registerSubmit = (e) => {
-    e.preventDefault();
-
-    const myForm = new FormData();
-
-    myForm.set("name", name);
-    myForm.set("email", email);
-    myForm.set("password", password);
-    myForm.set("avatar", avatar);
-
-    console.log("register form submit.");
-
-    dispatch(register(myForm));
-  };
-
   const registerDataChange = (e) => {
     if (e.target.name === "avatar") {
       const file = e.target.files[0];
@@ -130,10 +114,26 @@ const UserLoginSignUp = () => {
       };
 
       reader.readAsDataURL(file);
-      // reader.readAsDataURL(e.target.file[0]);
+      // reader.readAsDataURL(e.target.file[0]);f
     } else {
       setUser({ ...user, [e.target.name]: e.target.value });
     }
+  };
+
+  //registerSubmit
+  const registerSubmit = (e) => {
+    e.preventDefault();
+
+    const myForm = new FormData();
+
+    myForm.set("name", name);
+    myForm.set("email", email);
+    myForm.set("password", password);
+    myForm.set("avatar", avatar);
+
+    console.log("register form submit.", myForm);
+
+    dispatch(register(myForm));
   };
 
   //
@@ -176,6 +176,7 @@ const UserLoginSignUp = () => {
                   type="password"
                   className="password"
                   placeholder="Password"
+                  required
                   value={loginPassword}
                   onChange={(e) => setLoginPassword(e.target.value)}
                 />
@@ -225,6 +226,7 @@ const UserLoginSignUp = () => {
                   name="password"
                   className="password"
                   placeholder="Password"
+                  required
                   value={password}
                   onChange={registerDataChange}
                 />
