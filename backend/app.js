@@ -1,9 +1,10 @@
 const express = require("express");
-const cookiesParser = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 const app = express();
 const cors = require("cors");
+
 app.use(cors());
-app.use(cookiesParser());
+app.use(cookieParser());
 
 const bodyParser = require("body-parser");
 const fileupload = require("express-fileupload");

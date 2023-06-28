@@ -50,3 +50,11 @@
 // }
 
 // This is on master branch.
+
+//1. Working on App.js
+//2. backend> middleware > auth.js
+//3. navbar.js
+//4. App.js
+//5. userActions.js //
+
+//8:27 // 8: 47 // 9:10

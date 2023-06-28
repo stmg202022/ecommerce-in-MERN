@@ -92,10 +92,10 @@ exports.userLogin = catchAsyncError(async (req, res, next) => {
 
 //LOGOUT Case
 exports.logOut = catchAsyncError(async (req, res, next) => {
-  res.cookie("token", null, {
-    expires: new Date(Date.now()),
-    httpOnly: true,
-  });
+  // res.cookie("token", null, {
+  //   expires: new Date(Date.now()),
+  //   httpOnly: true,
+  // });
 
   res.status(200).json({
     success: true,
@@ -103,7 +103,7 @@ exports.logOut = catchAsyncError(async (req, res, next) => {
   });
 });
 
-//Forgot Password
+//FORGOT PASSWORD
 exports.forgotPassword = catchAsyncError(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 
@@ -111,6 +111,7 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler("User Not Found", 404));
   }
 
+  console.log(user);
   //if user found then we need resetToken
   const resetToken = await user.getResetpasswordToken(); //await
 
@@ -127,6 +128,8 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
 
   //==================================================================
   // console.log(resetPasswordUrl);
+
+  // console.log(message);
 
   try {
     await sendEmail({
@@ -150,11 +153,11 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
   }
 });
 
-//Reset Password
+//RESET PASSWORD
 exports.resetPassword = catchAsyncError(async (req, res, next) => {
   //
 
-  console.log(req.params.token);
+  // console.log(req.params.token);
 
   const resetPasswordToken = crypto
     .createHash("sha256")
@@ -190,15 +193,22 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {
   // console.log(user);
 });
 
+// ===============================================================================================================================================================================
 //get USER DETAILS
 exports.getUserDetails = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user.id); //user.id can be get when login success only
+
+  // console.log(req.user);
+
+  // console.log(req.header);
 
   res.status(200).json({
     success: true,
     user,
   });
 });
+
+// =======================================================================================================================================================================================
 
 //user CHANGE/update PASSWORD
 exports.userChangePassword = catchAsyncError(async (req, res, next) => {
@@ -221,13 +231,47 @@ exports.userChangePassword = catchAsyncError(async (req, res, next) => {
 
   sendToken(user, 200, res);
 });
+//===================================================================================================
+//===================================================================================================
+//===================================================================================================
+//===================================================================================================
 
 //user CHANGE/update profile // We will add cloudinary later
 exports.userChangeProfile = catchAsyncError(async (req, res, next) => {
+  const { name, email, avatar } = req.body;
+
   const newUserData = {
-    name: req.body.name,
-    email: req.body.email,
+    name,
+    email,
   };
+
+  if (avatar !== "") {
+    const user = await User.findById(req.user.id);
+
+    const imageId = user.avatar.public_id;
+
+    await cloudinary.v2.uploader.destroy(imageId);
+
+    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: "avatars",
+      width: 150,
+      crop: "scale",
+    });
+
+    newUserData.avatar = {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    };
+  }
+
+  // const newUserData = {
+  //   name,
+  //   email,
+  //   avatar: {
+  //     public_id: myCloud.public_id,
+  //     url: myCloud.secure_url,
+  //   },
+  // };
 
   const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
     new: true,

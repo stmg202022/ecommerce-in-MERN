@@ -12,13 +12,14 @@ import {
   productDetailReducer,
 } from "./Redux/Reducer/productReducer";
 
-import { userReducer } from "./Redux/Reducer/userReducer";
+import { userReducer, profileReducer } from "./Redux/Reducer/userReducer";
 
 //root_reducer
 const rootReducer = combineReducers({
   products: productReducer,
   productDetails: productDetailReducer,
-  user: userReducer,
+  users: userReducer,
+  profile: profileReducer,
 });
 
 let initialState = {};

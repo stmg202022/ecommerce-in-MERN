@@ -1,15 +1,53 @@
 @import "../common/styles/variables.css";
 
+.navHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.userOptions {
+  position: fixed;
+  right: 30px;
+  z-index: 1;
+  top: -104px;
+}
+
+.navBurger {
+  position: fixed;
+  margin: 20px;
+  font-size: 40px;
+  z-index: 1;
+}
+
+.hideCross {
+  display: block;
+  z-index: 11;
+}
+
+.showCross {
+  display: none;
+}
+
 /* Navbar CSS */
 .navbar {
   position: fixed;
   z-index: 2;
-  background-color: var(--maincolor);
-  height: 80px;
-  display: flex;
+  /* background-color: var(--maincolor); */
+  background-color: white;
+  height: 100vh;
+  /* display: flex; */
   justify-content: space-around;
   align-items: center;
   width: 100%;
+  transition: 9000ms;
+
+  display: none;
+}
+
+.navbar.active {
+  top: 0%;
+  display: flex;
+  transition: 9000ms;
 }
 
 .right-navbar {
@@ -25,7 +63,8 @@
 
 .right-navbar ul li a {
   text-decoration: none;
-  color: var(--colorText);
+  /* color: var(--colorText); */
+  color: black;
 }
 
 .burger {

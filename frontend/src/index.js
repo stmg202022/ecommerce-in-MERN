@@ -1,78 +1,19 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
+import ReactDOM from "react-dom/client";
+// import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
-import store from "./stores";
+import store from "./stores"; // Assuming you have your Redux store configured in a separate file
 
-import AppLayout from "./App";
-
-import Home from "./Component/layout/Home/home";
-
-// import Products from "./Component/layout/Product/products";
-// import ProductHome from "./Component/layout/Product2/productHome";
-import ProductSearch from "./Component/layout/Products/ProductSearch/product_search";
-// import { positions, transition, Provider as AlertProvider } from "react-alert";
-
-import Search from "./Component/layout/Search/search";
-
-import LoginSignUp from "./Component/user/userLoginSignUp/userLoginSignUp";
-import About from "./Component/layout/About/about";
-import Contact from "./Component/layout/Contact/contact";
-
-import Products from "./Component/layout/Products/product_home";
-import ProductDetails from "./Component/layout/Products/ProductDetail/product_details";
+import App from "./App";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const router = createBrowserRouter([
-  {
-    element: <AppLayout />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
+const rootElement = document.getElementById("root");
 
-      {
-        path: "products",
-        element: <Products />,
-      },
-
-      {
-        path: "/products/:keyword",
-        element: <ProductSearch />,
-      },
-
-      {
-        path: "contact",
-        element: <Contact />,
-      },
-      {
-        path: "about",
-        element: <About />,
-      },
-      {
-        path: "login",
-        element: <LoginSignUp />,
-      },
-      {
-        path: "/product/:id",
-        element: <ProductDetails />,
-      },
-
-      {
-        element: <Search />,
-        path: "/products/search",
-      },
-    ],
-  },
-]);
-
-createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(rootElement).render(
   <Provider store={store}>
     <ToastContainer />
-    <RouterProvider router={router} />
+    <App />
   </Provider>
 );

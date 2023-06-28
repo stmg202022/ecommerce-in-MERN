@@ -33,7 +33,7 @@ const UserLoginSignUp = () => {
   //using useDispatch and useSelector for login/signUp data
   const dispatch = useDispatch();
   const { loading, isAuthenticated, error } = useSelector(
-    (state) => state.user
+    (state) => state.users
   );
 
   const navigate = useNavigate();
@@ -65,10 +65,13 @@ const UserLoginSignUp = () => {
       dispatch(clearUserErrors());
     }
 
+    // isAuthenticated && navigate("/account");
+
     if (isAuthenticated) {
+      // console.log("==============authentication is done", isAuthenticated);
       navigate("/account");
     }
-  }, [dispatch, error, navigate, isAuthenticated]);
+  }, [dispatch, error, isAuthenticated, navigate]);
 
   //
   const switchTabs = (e, tab) => {
@@ -134,6 +137,7 @@ const UserLoginSignUp = () => {
     console.log("register form submit.", myForm);
 
     dispatch(register(myForm));
+    toast("REGISTER  SUCCESS.");
   };
 
   //

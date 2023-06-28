@@ -28,16 +28,16 @@ const ProductList = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   let { keyword } = useParams();
-  console.log(keyword);
+  // console.log(keyword);
 
   const [price, setPrice] = useState([0, 300000]);
-  console.log(price);
+  // console.log(price);
 
   const [ratings, setRatings] = useState(0);
-  console.log(ratings);
+  // console.log(ratings);
 
   const [category, setCategory] = useState("");
-  console.log(category);
+  // console.log(category);
 
   //getting data from reducer state....
   const {
@@ -51,11 +51,11 @@ const ProductList = () => {
 
   const count = products.length;
 
-  console.log(count);
-  console.log(products);
-  console.log(resultPerPage);
-  console.log(productsCount);
-  console.log(resultPerPage < productsCount);
+  // console.log(count);
+  // console.log(products);
+  // console.log(resultPerPage);
+  // console.log(productsCount);
+  // console.log(resultPerPage < productsCount);
 
   //fetching data...
   useEffect(() => {

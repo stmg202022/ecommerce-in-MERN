@@ -42,6 +42,11 @@ const userSchema = new mongoose.Schema({
     default: "user",
   },
 
+  createAt: {
+    type: Date,
+    default: Date.now(),
+  },
+
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });
@@ -85,6 +90,8 @@ userSchema.methods.getResetpasswordToken = async function () {
     .digest("hex");
 
   this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+
+  // console.log(resetToken);
 
   return resetToken;
 };

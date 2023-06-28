@@ -19,3 +19,7 @@ const sendToken = (user, statusCode, res) => {
 };
 
 module.exports = sendToken;
+
+// I send a token from this sendToken to the body.response
+//Now i can receive { token } from fronted by using axios.post in login phase
+//Because the token is set in the cookie of postman not on the chrome => application => cookies

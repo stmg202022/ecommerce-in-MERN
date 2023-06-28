@@ -88,10 +88,17 @@ exports.getProductDetails = catchAsyncError(async (req, res, next) => {
 exports.updateProduct = catchAsyncError(async (req, res, next) => {
   const id = req.params.id;
 
+  console.log(id);
+
+  console.log(req.body);
+
   try {
     const product = await Product.findByIdAndUpdate({ _id: id }, req.body, {
       new: true,
     });
+
+    // console.log(product);
+
     res.status(200).json(product);
   } catch (err) {
     // res.status(500).json({
