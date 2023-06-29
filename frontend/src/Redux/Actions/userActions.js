@@ -16,6 +16,12 @@ import {
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_FAIL,
   //
+
+  //
+  UPDATE_PASSWORD_REQUEST,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_FAIL,
+  //
   CLEAR_ERRORS,
 } from "../Constants/userConstant";
 
@@ -149,10 +155,6 @@ export const logoutUser = () => async (dispatch) => {
     dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
   }
 };
-//===================================================================================================
-//===================================================================================================
-//===================================================================================================
-//===================================================================================================
 
 //USER EDIT PROFILE
 export const userChangeProfile = (updateData) => async (dispatch) => {
@@ -190,6 +192,52 @@ export const userChangeProfile = (updateData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_PROFILE_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//USER EDIT PASSWORD
+export const userChangePassword = (updateData) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_PASSWORD_REQUEST });
+
+    const cookie = document.cookie;
+    // console.log("the token is" + cookie);
+
+    const token = cookie.split("=")[1];
+
+    console.log({ token });
+
+    // console.log(
+    //   "update password Data are]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]",
+    //   updateData.get("oldPassword") +
+    //     updateData.get("newPassword") +
+    //     updateData.get("confirmPassword")
+    // );
+
+    const res = await axios.put(
+      "http://localhost:8080/api/v1/password/update",
+      updateData, // Pass updateData as the request body
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+
+    // console.log(
+    //   "??????????????????????????????????????????????????????????????????",
+    //   res
+    // );
+
+    await dispatch({
+      type: UPDATE_PASSWORD_SUCCESS,
+      payload: res.data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PASSWORD_FAIL,
       payload: error.response.data.message,
     });
   }

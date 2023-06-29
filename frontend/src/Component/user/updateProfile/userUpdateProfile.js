@@ -25,6 +25,7 @@ import "react-toastify/dist/ReactToastify.css";
 //When login Success...
 import { useNavigate } from "react-router-dom";
 import { UPDATE_PROFILE_RESET } from "../../../Redux/Constants/userConstant";
+
 const UpdateProfile = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.users);
@@ -38,10 +39,10 @@ const UpdateProfile = () => {
 
   const { loading, isUpdated, error } = useSelector((state) => state.profile);
 
-  console.log(
-    "*********************************************************",
-    loading
-  );
+  // console.log(
+  //   "*********************************************************",
+  //   loading
+  // );
 
   const navigate = useNavigate();
 

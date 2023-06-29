@@ -23,6 +23,7 @@ import ProductDetails from "../layout/Products/ProductDetail/product_details";
 
 import Account from "../layout/UserAccount/account";
 import UpdateProfile from "../user/updateProfile/userUpdateProfile";
+import UpdatePassword from "../user/updatePassword/userUpdatePassword.js";
 
 import UserOptions from "../layout/UserOptions/options";
 
@@ -171,6 +172,12 @@ const Navbar = () => {
               path="/me/update"
               element={
                 isAuthenticated ? <UpdateProfile /> : <Navigate to="/login" />
+              }
+            />
+            <Route
+              path="/password/update"
+              element={
+                isAuthenticated ? <UpdatePassword /> : <Navigate to="/login" />
               }
             />
 

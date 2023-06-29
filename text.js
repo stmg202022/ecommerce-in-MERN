@@ -58,3 +58,8 @@
 //5. userActions.js //
 
 //8:27 // 8: 47 // 9:10
+
+//get user Details.
+//update the user profile
+//loginRegisterWithAuthentication
+//change the writing of react-router-dom
