@@ -12,7 +12,11 @@ import {
   productDetailReducer,
 } from "./Redux/Reducer/productReducer";
 
-import { userReducer, profileReducer } from "./Redux/Reducer/userReducer";
+import {
+  userReducer,
+  profileReducer,
+  forgotPasswordReducer,
+} from "./Redux/Reducer/userReducer";
 
 //root_reducer
 const rootReducer = combineReducers({
@@ -20,6 +24,7 @@ const rootReducer = combineReducers({
   productDetails: productDetailReducer,
   users: userReducer,
   profile: profileReducer,
+  forgotPassword: forgotPasswordReducer,
 });
 
 let initialState = {};

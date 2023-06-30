@@ -22,6 +22,16 @@ import {
   UPDATE_PASSWORD_SUCCESS,
   UPDATE_PASSWORD_FAIL,
   //
+  //FOR FORGOT PASSWORD
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAIL,
+  //
+  //FOR RESET PASSWORD
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAIL,
+  //
   CLEAR_ERRORS,
 } from "../Constants/userConstant";
 
@@ -243,6 +253,61 @@ export const userChangePassword = (updateData) => async (dispatch) => {
   }
 };
 
+//FORGOT PASSWORD
+export const forgotPassword = (email) => async (dispatch) => {
+  //send email => get adata: { success, message}
+  try {
+    dispatch({ type: FORGOT_PASSWORD_REQUEST });
+
+    // const config = { headers: { "Content-Type": "application/json" } };
+
+    const { data } = await axios.post(
+      "http://localhost:8080/api/v1/password/forgot/",
+      {
+        email,
+      }
+    );
+
+    await dispatch({ type: FORGOT_PASSWORD_SUCCESS, payload: data.message });
+  } catch (error) {
+    dispatch({
+      type: FORGOT_PASSWORD_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//RESET PASSWORD
+export const resetPassword = (token, updateData) => async (dispatch) => {
+  // console.log(updateData.get("password"));
+  try {
+    dispatch({ type: RESET_PASSWORD_REQUEST });
+
+    console.log("The token receive from useParams is : ", token);
+
+    // const config = { headers: { "Content-Type": "application/json" } };
+
+    const res = await axios.put(
+      `http://localhost:8080/api/v1/password/reset/${token}`,
+      updateData
+    );
+
+    // console.log({ token });
+    // console.log(res);
+
+    console.log(
+      "update Data are]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]",
+      updateData.get("password") + updateData.get("confirmPassword")
+    );
+
+    await dispatch({ type: RESET_PASSWORD_SUCCESS, payload: res.data.success });
+  } catch (error) {
+    dispatch({
+      type: RESET_PASSWORD_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 //CLEAR-USER-ERRORS
 export const clearUserErrors = () => async (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });

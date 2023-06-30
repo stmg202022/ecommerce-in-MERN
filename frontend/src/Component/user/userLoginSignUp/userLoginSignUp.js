@@ -69,6 +69,7 @@ const UserLoginSignUp = () => {
 
     if (isAuthenticated) {
       // console.log("==============authentication is done", isAuthenticated);
+
       navigate("/account");
     }
   }, [dispatch, error, isAuthenticated, navigate]);
@@ -137,7 +138,6 @@ const UserLoginSignUp = () => {
     console.log("register form submit.", myForm);
 
     dispatch(register(myForm));
-    toast("REGISTER  SUCCESS.");
   };
 
   //

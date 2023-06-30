@@ -35,6 +35,8 @@ import * as AiIcons from "react-icons/ai";
 import meroshop from "../../images/meroshop.png";
 
 import { linkData } from "../linkData/linkData";
+import ForgotPassword from "../user/forgotPassword/forgotPassword";
+import ResetPassword from "../user/resetPassword/resetPassword";
 
 // function isToken() {
 //   // Add your logic to check if the user is authenticated
@@ -51,7 +53,6 @@ const Navbar = () => {
 
   const showBurger = () => {
     setBurger(!burger);
-    console.log("...........................", burger);
   };
 
   return (
@@ -156,6 +157,8 @@ const Navbar = () => {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<LoginSignUp />} />
+            <Route path="/password/forgot" element={<ForgotPassword />} />
+            <Route path="/password/reset/:token" element={<ResetPassword />} />
 
             <Route path="/products" element={<Products />} />
             <Route path="/products/search" element={<Search />} />
