@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./productDetails.css";
 import {
-  clearError,
+  // clearError,
   getProductDetails,
 } from "../../../../Redux/Actions/productActions";
 import { useParams } from "react-router-dom";
@@ -12,8 +12,8 @@ import { Button } from "@mui/material";
 import ReviewCart from "../../Reviewcart/review_cart";
 // import { Paper } from "@mui/material";
 
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 import ReactStars from "react-rating-stars-component";
 // import AlertDialog from "../../Alert/alert";
@@ -28,10 +28,10 @@ const ProductDetails = () => {
   );
 
   useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch(clearError());
-    }
+    // if (error) {
+    //   toast.error(error);
+    //   dispatch(clearError());
+    // }
     dispatch(getProductDetails({ id }));
   }, [dispatch, id, error]);
 
