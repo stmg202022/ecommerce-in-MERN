@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./productDetails.css";
 import {
@@ -12,13 +12,17 @@ import { Button } from "@mui/material";
 import ReviewCart from "../../Reviewcart/review_cart";
 // import { Paper } from "@mui/material";
 
-// import { toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import ReactStars from "react-rating-stars-component";
 // import AlertDialog from "../../Alert/alert";
 
+//ADDING ITEMS TO CART FROM CARTACTION
+import { addItemsToCart } from "../../../../Redux/Actions/cartActions";
+
 const ProductDetails = () => {
+  const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
 
   const dispatch = useDispatch();
@@ -46,6 +50,22 @@ const ProductDetails = () => {
     activeColor: "#ffd700",
     value: product ? Number(product.ratings) : 0,
     edit: false,
+  };
+
+  const increaseQuantity = () => {
+    if (product.stock <= quantity) return;
+    const qty = quantity + 1;
+    setQuantity(qty);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity <= 1) return 1;
+    setQuantity(quantity - 1);
+  };
+
+  const addToCartItem = () => {
+    dispatch(addItemsToCart(id, quantity));
+    toast("product added to Cart.");
   };
 
   return (
@@ -89,11 +109,13 @@ const ProductDetails = () => {
 
                 <div className="details_block3-1">
                   <div className="details_block3-1-1">
-                    <Button>-</Button>
-                    <input type="number" value="1" />
-                    <Button>+</Button>
+                    <Button onClick={decreaseQuantity}>-</Button>
+                    <input type="number" value={quantity} readOnly />
+                    <Button onClick={increaseQuantity}>+</Button>
                   </div>
-                  <Button className="add_button">Add To Cart</Button>
+                  <Button className="add_button" onClick={addToCartItem}>
+                    Add To Cart
+                  </Button>
                 </div>
                 <p>
                   Status:

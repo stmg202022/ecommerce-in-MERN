@@ -8,6 +8,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
+import ViewListIcon from "@mui/icons-material/ViewList";
 
 import ProfileImage from "../../../images/profileImage.jpg";
 
@@ -25,6 +26,7 @@ const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
 }));
 
 const UserOptions = () => {
+  const { cartItems } = useSelector((state) => state.cart);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.users);
@@ -34,7 +36,16 @@ const UserOptions = () => {
   console.log(ProfileImage);
 
   const actions = [
-    { icon: <ShoppingCartIcon />, name: "Order", fun: order },
+    { icon: <ViewListIcon />, name: "Order", fun: order },
+    {
+      icon: (
+        <ShoppingCartIcon
+          style={{ color: cartItems.length > 0 ? "tomato" : "none" }}
+        />
+      ),
+      name: `Cart (${cartItems.length})`,
+      fun: cart,
+    },
     { icon: <AccountCircleIcon />, name: "Account", fun: account },
     { icon: <LogoutIcon />, name: "Logout", fun: logout },
     // { icon: <ShareIcon />, name: "Share" },
@@ -54,6 +65,10 @@ const UserOptions = () => {
 
   async function account() {
     navigate("/account");
+  }
+
+  function cart() {
+    navigate("/cart");
   }
 
   function order() {

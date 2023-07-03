@@ -14,12 +14,13 @@ import Home from "../layout/Home/home";
 import About from "../layout/About/about";
 import LoginSignUp from "../user/userLoginSignUp/userLoginSignUp";
 import Contact from "../layout/Contact/contact";
-import Products from "../layout/Products/product_home";
 import Search from "../layout/Search/search";
 import NotFound from "../layout/NotFount/notFound.js";
 
+import Products from "../layout/Products/product_home";
 import ProductSearch from "../../Component/layout/Products/ProductSearch/product_search";
 import ProductDetails from "../layout/Products/ProductDetail/product_details";
+import Cart from "../layout/Cart/cart.js";
 
 import Account from "../layout/UserAccount/account";
 import UpdateProfile from "../user/updateProfile/userUpdateProfile";
@@ -163,8 +164,8 @@ const Navbar = () => {
             <Route path="/products" element={<Products />} />
             <Route path="/products/search" element={<Search />} />
             <Route path="/products/:keyword" element={<ProductSearch />} />
-
             <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/cart" element={<Cart />} />
 
             <Route
               path="/account"
