@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import "./userLoginSignUp.css";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // import AvatarPreview from "../../../images/profileImage.jpg";
 
@@ -37,6 +37,12 @@ const UserLoginSignUp = () => {
   );
 
   const navigate = useNavigate();
+  // const location = useLocation();
+  // const redirect = location.search ? location.search.split("=")[1] : "/account";
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const redirect = searchParams.get("redirect");
+  const redirectUrl = redirect ? `/${redirect}` : "/account";
 
   //useRef Hook of react
   const loginTab = useRef(null); //formRef
@@ -70,9 +76,9 @@ const UserLoginSignUp = () => {
     if (isAuthenticated) {
       // console.log("==============authentication is done", isAuthenticated);
 
-      navigate("/account");
+      navigate(redirectUrl);
     }
-  }, [dispatch, error, isAuthenticated, navigate]);
+  }, [dispatch, error, isAuthenticated, navigate, redirectUrl]);
 
   //
   const switchTabs = (e, tab) => {

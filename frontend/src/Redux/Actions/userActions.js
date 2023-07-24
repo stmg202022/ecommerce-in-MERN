@@ -56,7 +56,14 @@ export const login = (email, password) => async (dispatch) => {
 
     //set the expired/max-age of the token
     //token should be set because the backend do not support to set the token in application => cookies itself
-    document.cookie = `token=${token}; path=/`;
+    // Store the token in the document.cookie
+    // Calculate the expiration date
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 7);
+
+    // Store the token in the document.cookie with an expiration date
+    document.cookie = `token=${token}; expires=${expirationDate.toUTCString()}; path=/`;
+
     // debugger;
 
     // console.log("Token set as a cookie:", document.cookie);
@@ -111,10 +118,17 @@ export const register = (userData) => async (dispatch) => {
 export const loadUser = () => async (dispatch) => {
   try {
     dispatch({ type: LOAD_USER_REQUEST });
-    const cookie = document.cookie;
-    // console.log("the token is" + cookie);
+    // Retrieve the token from the document.cookie
+    const cookies = document.cookie.split(";");
+    let token = "";
+    cookies.forEach((cookie) => {
+      const [name, value] = cookie.trim().split("=");
+      if (name === "token") {
+        token = value;
+      }
+    });
 
-    const token = cookie.split("=")[1];
+    console.log(token); // Do whatever you need with the token
 
     console.log({ token });
     const res = await axios.get("http://localhost:8080/api/v1/me", {
@@ -171,10 +185,17 @@ export const userChangeProfile = (updateData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_PROFILE_REQUEST });
 
-    const cookie = document.cookie;
-    // console.log("the token is" + cookie);
+    // Retrieve the token from the document.cookie
+    const cookies = document.cookie.split(";");
+    let token = "";
+    cookies.forEach((cookie) => {
+      const [name, value] = cookie.trim().split("=");
+      if (name === "token") {
+        token = value;
+      }
+    });
 
-    const token = cookie.split("=")[1];
+    console.log(token); // Do whatever you need with the token
 
     console.log({ token });
 
@@ -211,11 +232,15 @@ export const userChangeProfile = (updateData) => async (dispatch) => {
 export const userChangePassword = (updateData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_PASSWORD_REQUEST });
-
-    const cookie = document.cookie;
-    // console.log("the token is" + cookie);
-
-    const token = cookie.split("=")[1];
+    // Retrieve the token from the document.cookie
+    const cookies = document.cookie.split(";");
+    let token = "";
+    cookies.forEach((cookie) => {
+      const [name, value] = cookie.trim().split("=");
+      if (name === "token") {
+        token = value;
+      }
+    });
 
     console.log({ token });
 

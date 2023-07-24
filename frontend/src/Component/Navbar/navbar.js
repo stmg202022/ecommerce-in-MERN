@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Link,
@@ -7,6 +7,8 @@ import {
   Navigate,
 } from "react-router-dom";
 import "../Navbar/navbar.css";
+
+// import axios from "axios";
 
 import { useSelector } from "react-redux";
 
@@ -20,7 +22,13 @@ import NotFound from "../layout/NotFount/notFound.js";
 import Products from "../layout/Products/product_home";
 import ProductSearch from "../../Component/layout/Products/ProductSearch/product_search";
 import ProductDetails from "../layout/Products/ProductDetail/product_details";
+
 import Cart from "../layout/Cart/cart.js";
+import Shipping from "../layout/Shipping/shipping";
+import ComfirmOrder from "../layout/ConfirmOrder/confirmOrder";
+// import Payment from "../layout/Payment/payment";
+import Payment from "../layout/Khalti/khalti";
+import Success from "../layout/Success/success.js";
 
 import Account from "../layout/UserAccount/account";
 import UpdateProfile from "../user/updateProfile/userUpdateProfile";
@@ -39,22 +47,71 @@ import { linkData } from "../linkData/linkData";
 import ForgotPassword from "../user/forgotPassword/forgotPassword";
 import ResetPassword from "../user/resetPassword/resetPassword";
 
-// function isToken() {
-//   // Add your logic to check if the user is authenticated
-//   // Return true if authenticated, false otherwise
-//   return document.cookie ? true : false;
-// }
+//All are for stripe payments
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
 
 const Navbar = () => {
   const [burger, setBurger] = useState(true);
-
   const { isAuthenticated, user } = useSelector((state) => state.users);
+  const [stripeApiKey, setStripeApiKey] = useState("");
 
   console.log("user==================================", user, isAuthenticated);
+
+  const getStripeApiKey = async () => {
+    try {
+      const cookies = document.cookie.split(";");
+
+      let token = "";
+      cookies.forEach((cookie) => {
+        const [name, value] = cookie.trim().split("=");
+
+        if (name === "token") {
+          token = value;
+        }
+      });
+
+      const { data } = await axios.get(
+        "http://localhost:8080/api/v1/stripeapikey",
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+
+      // console.log("the stripeKey from data is", data.stripeKey);
+      const stripeKey = data.stripeKey;
+
+      if (stripeKey) {
+        setStripeApiKey(stripeKey);
+      } else {
+        console.log("Stripe key not found in API response");
+      }
+    } catch (error) {
+      console.error("Failed to fetch Stripe API key:", error);
+    }
+  };
+
+  useEffect(() => {
+    getStripeApiKey();
+  }, []);
 
   const showBurger = () => {
     setBurger(!burger);
   };
+
+  useEffect(() => {
+    if (stripeApiKey) {
+      const stripePromise = loadStripe(stripeApiKey);
+      setStripePromise(stripePromise);
+    }
+  }, [stripeApiKey]);
+
+  const [stripePromise, setStripePromise] = useState(null);
+
+  // const stripePromise = loadStripe(stripeApiKey);
 
   return (
     <Router>
@@ -128,33 +185,10 @@ const Navbar = () => {
                   <CgIcons.CgSearch />
                 </Link>
               </div>
-
-              {/* <div className="burger-main">
-                <Link
-                  to="#"
-                  onClick={showBurger}
-                  className={burger ? "burger" : "burger active"}
-                >
-                  <FaIcons.FaBars style={{ color: "wheat" }} />
-                </Link>
-              </div> */}
-
-              {/* <div
-                className={burger ? "second_navbar" : "second_navbar active"}
-              >
-                <Link
-                  to="#"
-                  className={burger ? "cross" : "cross active"}
-                  onClick={showBurger}
-                >
-                  <AiIcons.AiOutlineClose style={{ color: "wheat" }} />
-                </Link>
-                <h1>this is second_navbar</h1>
-              </div> */}
             </div>
           </div>
           <Routes>
-            <Route exact path="/" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<LoginSignUp />} />
@@ -166,6 +200,17 @@ const Navbar = () => {
             <Route path="/products/:keyword" element={<ProductSearch />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/shipping" element={<Shipping />} />
+            <Route path="/order/confirm" element={<ComfirmOrder />} />
+            <Route
+              path="/payment/process/*"
+              element={
+                <Elements stripe={stripePromise}>
+                  <Payment />
+                </Elements>
+              }
+            />
+            <Route path="/success" element={<Success />} />
 
             <Route
               path="/account"
