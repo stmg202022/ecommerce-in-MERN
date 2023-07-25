@@ -135,3 +135,33 @@
 
 //stripe testing indigrations
 // 4242424242424242
+
+// try {
+//     let config = {
+//       headers: {
+//         Authorization: process.env.Khalti_SECRET_KEY,
+//       },
+//     };
+
+//     const data = {
+//       token: req.payload.token,
+//       amount: req.payload.amount,
+//     };
+
+//     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>", data);
+
+//     axios
+//       .post("https://khalti.com/api/v2/payment/verify/", data, config)
+//       .then((response) => {
+//         console.log(response.data);
+//         res.status(200).json({ success: true });
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//         res
+//           .status(500)
+//           .json({ error: "An error occurred while verifying payment." });
+//       });
+//   } catch (error) {}
+
+// https://admin.khalti.com

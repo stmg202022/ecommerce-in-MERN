@@ -1,0 +1,28 @@
+.khaltiContainer {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  background-color: rgb(255, 255, 255);
+  height: 65vh;
+  margin: 2vmax;
+}
+.khaltiForm {
+  width: 40%;
+  height: 100%;
+}
+
+.khaltiForm_content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paybutton {
+  background-color: purple;
+  /* backgroundColor: "purple",
+  padding: "10px",
+  color: "white",
+  cursor: "pointer",
+  fontWeight: "bold",
+  border: "1px solid white", */
+}

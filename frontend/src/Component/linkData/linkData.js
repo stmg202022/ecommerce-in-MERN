@@ -30,6 +30,13 @@ export const linkData = [
   },
 
   {
+    title: "Cart",
+    path: "/cart",
+    icon: <IoIcons.IoIosPaper />,
+    cName: "nav-text",
+  },
+
+  {
     title: "Login",
     path: "/login",
     icon: <FaIcons.FaEnvelopeOpenText />,

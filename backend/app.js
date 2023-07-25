@@ -23,7 +23,7 @@ app.use(express.json());
 const productRouter = require("./routes/productRoute");
 const userRouter = require("./routes/userRouter");
 const orderRouter = require("./routes/orderRoute");
-const paymentRouter = require("./routes/paymentRoute");
+const paymentRouter = require("./routes/khaltiPaymentRoute.js");
 
 //app connecting with routes
 app.use("/api/v1", productRouter.router);

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Link,
@@ -27,7 +27,7 @@ import Cart from "../layout/Cart/cart.js";
 import Shipping from "../layout/Shipping/shipping";
 import ComfirmOrder from "../layout/ConfirmOrder/confirmOrder";
 // import Payment from "../layout/Payment/payment";
-import Payment from "../layout/Khalti/khalti";
+import KhaltiPayment from "../layout/Khalti/khalti";
 import Success from "../layout/Success/success.js";
 
 import Account from "../layout/UserAccount/account";
@@ -47,19 +47,19 @@ import { linkData } from "../linkData/linkData";
 import ForgotPassword from "../user/forgotPassword/forgotPassword";
 import ResetPassword from "../user/resetPassword/resetPassword";
 
-//All are for stripe payments
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 
 const Navbar = () => {
   const [burger, setBurger] = useState(true);
+
   const { isAuthenticated, user } = useSelector((state) => state.users);
-  const [stripeApiKey, setStripeApiKey] = useState("");
+  console.log("user==================================", user, isAuthenticated);
+
+  const [khaltiApiKey, setKhaltiApiKey] = useState("");
 
   console.log("user==================================", user, isAuthenticated);
 
-  const getStripeApiKey = async () => {
+  const getKhaltiApiKey = async () => {
     try {
       const cookies = document.cookie.split(";");
 
@@ -73,7 +73,7 @@ const Navbar = () => {
       });
 
       const { data } = await axios.get(
-        "http://localhost:8080/api/v1/stripeapikey",
+        "http://localhost:8080/api/v1/khaltiapikey",
         {
           headers: {
             authorization: token,
@@ -82,36 +82,26 @@ const Navbar = () => {
       );
 
       // console.log("the stripeKey from data is", data.stripeKey);
-      const stripeKey = data.stripeKey;
+      const khalti_public_key = data.khalti_public_key;
 
-      if (stripeKey) {
-        setStripeApiKey(stripeKey);
+      if (khalti_public_key) {
+        setKhaltiApiKey(khalti_public_key);
       } else {
-        console.log("Stripe key not found in API response");
+        console.log("khalti key not found in API response");
       }
     } catch (error) {
-      console.error("Failed to fetch Stripe API key:", error);
+      console.error("Failed to fetch Khalti API key:", error);
     }
   };
 
   useEffect(() => {
-    getStripeApiKey();
+    getKhaltiApiKey();
   }, []);
 
+  //
   const showBurger = () => {
     setBurger(!burger);
   };
-
-  useEffect(() => {
-    if (stripeApiKey) {
-      const stripePromise = loadStripe(stripeApiKey);
-      setStripePromise(stripePromise);
-    }
-  }, [stripeApiKey]);
-
-  const [stripePromise, setStripePromise] = useState(null);
-
-  // const stripePromise = loadStripe(stripeApiKey);
 
   return (
     <Router>
@@ -200,14 +190,22 @@ const Navbar = () => {
             <Route path="/products/:keyword" element={<ProductSearch />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/shipping" element={<Shipping />} />
-            <Route path="/order/confirm" element={<ComfirmOrder />} />
+            <Route
+              path="/shipping"
+              element={isAuthenticated ? <Shipping /> : <NotFound />}
+            />
+            <Route
+              path="/order/confirm"
+              element={isAuthenticated ? <ComfirmOrder /> : <NotFound />}
+            />
             <Route
               path="/payment/process/*"
               element={
-                <Elements stripe={stripePromise}>
-                  <Payment />
-                </Elements>
+                isAuthenticated ? (
+                  <KhaltiPayment khaltiApiKey={khaltiApiKey} />
+                ) : (
+                  <NotFound />
+                )
               }
             />
             <Route path="/success" element={<Success />} />

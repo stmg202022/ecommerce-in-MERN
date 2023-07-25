@@ -17,6 +17,7 @@
     "country-list": "^2.3.0",
     "country-region-data": "^2.7.0",
     "iso-3166-2": "^1.0.0",
+    "khalti-checkout-web": "^2.2.0",
     "overlay-navbar": "^1.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
