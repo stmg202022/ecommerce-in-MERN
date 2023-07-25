@@ -4,7 +4,50 @@ import CheckOutSteps from "../Shipping/checkOutSteps";
 import KhaltiCheckout from "khalti-checkout-web";
 import axios from "axios";
 
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 const KhaltiPayment = ({ khaltiApiKey }) => {
+  const navigate = useNavigate();
+  //
+
+  //
+  //this is orderInfoPrice  which contains calculations of product with:
+  // shippingCharge: 0;
+  // subtotal: 745900;
+  // tax: 134262;
+  // totalPrice: 880162;
+  const orderInfoPrice = JSON.parse(sessionStorage.getItem("orderInfo"));
+  // console.log(orderInfoPrice);
+  const { totalPrice } = orderInfoPrice;
+  // console.log(totalPrice);
+  //
+
+  //this is from shippingInfo form which contains:
+  // address: "khokana";
+  // city: "Lalitpur";
+  // phoneNo: "9867543210";
+  // state: "Bagmati";
+  // Also cartItems is the Arraylists of each product containing:
+  // image: "https://cdn.vox-cdn.com/thumbor/08jubjGM7E7FStVppBEAc0u489E=/0x0:2040x1360/1400x1400/filters:focal(1020x680:1021x681)/cdn.vox-cdn.com/uploads/chorus_asset/file/13272937/jbareham_181012_2989_0549.jpg";
+  // name: "android5";
+  // price: 90000;
+  // product: "642ff5b918ed2acd2f2b8a8f";
+  // quantity: 1;
+  // stock: 3;
+  const { shippingInfo, cartItems } = useSelector((state) => state.cart);
+  console.log(
+    "shippingInfo is",
+    shippingInfo,
+    "and listof item is:",
+    cartItems
+  );
+
+  //This contains user details:
+  const { user } = useSelector((state) => state.users);
+  console.log(user);
+  //
+
   // Define your config object here with the correct publicKey
   const config = {
     publicKey: khaltiApiKey,
@@ -15,12 +58,6 @@ const KhaltiPayment = ({ khaltiApiKey }) => {
       async onSuccess(payload) {
         // hit merchant api for initiating verification
         console.log(payload);
-
-        // const { token, amount } = payload;
-
-        console.log(
-          "generate token is++++++++++++++++++++++++++++++++++++++++++++++"
-        );
 
         const cookies = document.cookie.split(";");
 
@@ -44,8 +81,10 @@ const KhaltiPayment = ({ khaltiApiKey }) => {
             }
           )
           .then((response) => {
-            alert("Thank you for payment.");
-            console.log(response.data); // Assuming the backend responds with success: true
+            // Assuming the backend responds with success: true
+
+            navigate("/success");
+            console.log(response.data);
           })
           .catch((error) => {
             console.error("Error processing payment:", error);
@@ -81,7 +120,9 @@ const KhaltiPayment = ({ khaltiApiKey }) => {
           <div className="khaltiForm_content">
             <h1>Payment</h1>
             <button
-              onClick={() => checkout.show({ amount: 1000 })}
+              onClick={() =>
+                checkout.show({ amount: Math.round(totalPrice / 100) })
+              }
               className="paybutton"
             >
               Pay via Khalti
