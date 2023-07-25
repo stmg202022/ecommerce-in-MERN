@@ -165,3 +165,31 @@
 //   } catch (error) {}
 
 // https://admin.khalti.com
+
+//===================================================================================================================================================
+// PORT=8080
+
+// DB_URL="mongodb://127.0.0.1:27017/ecommercedbs"
+
+// JWT_SECRET = JHFDSHFAJHDFJHDSAKJLFHDGFHRTHGDJGNDBFD9FH
+
+// JWT_EXPIRE = 5d
+
+// COOKIE_DATE = 5
+
+// SMPT_SERVICE = gmail
+
+// SMPT_EMAIL = stmg202023@gmail.com
+
+// SMPT_PASSWORD = yxwjmdmaaichugde
+
+// CLOUDINARY_NAME = db2w3vlth
+// CLOUDINARY_KEY = 138122956576733
+// CLOUDINARY_API_SECRET = WcAwdYeqlGQ2yl_g00bX8Q11GT8
+
+// FRONTEND_URL = "http://localhost:3000"
+
+// Khalti_API_KEY = test_public_key_739f333174ad4688a10bcc99facf0701
+// Khalti_SECRET_KEY = Key test_secret_key_a38d9e3a8c41407880f384c6ae4d8a49
+
+// ..
