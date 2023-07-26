@@ -1,14 +1,23 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import "./khalti.css";
 import CheckOutSteps from "../Shipping/checkOutSteps";
 import KhaltiCheckout from "khalti-checkout-web";
 import axios from "axios";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import {
+  createOrder,
+  clearError,
+} from "../../../Redux/Actions/newOrderActions"; //
 
 const KhaltiPayment = ({ khaltiApiKey }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   //
 
   //
@@ -19,7 +28,7 @@ const KhaltiPayment = ({ khaltiApiKey }) => {
   // totalPrice: 880162;
   const orderInfoPrice = JSON.parse(sessionStorage.getItem("orderInfo"));
   // console.log(orderInfoPrice);
-  const { totalPrice } = orderInfoPrice;
+  const { shippingCharge, subtotal, tax, totalPrice } = orderInfoPrice;
   // console.log(totalPrice);
   //
 
@@ -36,6 +45,7 @@ const KhaltiPayment = ({ khaltiApiKey }) => {
   // quantity: 1;
   // stock: 3;
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
+  const { name, product, image } = cartItems;
   console.log(
     "shippingInfo is",
     shippingInfo,
@@ -48,12 +58,24 @@ const KhaltiPayment = ({ khaltiApiKey }) => {
   console.log(user);
   //
 
+  const { error } = useSelector((state) => state.newOrder);
+
   // Define your config object here with the correct publicKey
+
+  const order = {
+    shippingInfo,
+    itemsPrice: subtotal,
+    taxPrice: tax,
+    shippingPrice: shippingCharge,
+    totalPrice,
+    orderItems: cartItems,
+  };
+
   const config = {
     publicKey: khaltiApiKey,
     productIdentity: "00004",
     productName: "Drogon",
-    productUrl: "http://gameofthrones.com/buy/Dragons",
+    productUrl: "http://localhost:3000",
     eventHandler: {
       async onSuccess(payload) {
         // hit merchant api for initiating verification
@@ -82,9 +104,13 @@ const KhaltiPayment = ({ khaltiApiKey }) => {
           )
           .then((response) => {
             // Assuming the backend responds with success: true
-
+            order.paymentInfo = {
+              id: response.data.result.idx,
+              status: response.data.result.state.name,
+              sendPhoneNo: response.data.result.user.name.match(/\((\d+)\)/)[1],
+            };
+            dispatch(createOrder(order));
             navigate("/success");
-            console.log(response.data);
           })
           .catch((error) => {
             console.error("Error processing payment:", error);
@@ -111,6 +137,13 @@ const KhaltiPayment = ({ khaltiApiKey }) => {
   };
 
   const checkout = new KhaltiCheckout(config);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearError());
+    }
+  }, [dispatch, error]);
 
   return (
     <Fragment>

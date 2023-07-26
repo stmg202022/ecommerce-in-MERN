@@ -130,7 +130,6 @@ export const loadUser = () => async (dispatch) => {
 
     console.log(token); // Do whatever you need with the token
 
-    console.log({ token });
     const res = await axios.get("http://localhost:8080/api/v1/me", {
       headers: {
         authorization: token,

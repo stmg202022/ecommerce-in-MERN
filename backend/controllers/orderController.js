@@ -6,11 +6,11 @@ const ErrorHandler = require("../utils/errorHandler");
 //create an Order
 exports.newOrder = catchAsyncError(async (req, res, next) => {
   const {
+    shippingInfo,
     itemsPrice,
     taxPrice,
     shippingPrice,
     totalPrice,
-    shippingInfo,
     orderItems,
     paymentInfo,
   } = req.body;

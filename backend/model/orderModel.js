@@ -10,22 +10,23 @@ const orderSchema = mongoose.Schema({
       type: String,
       required: true,
     },
-    state: {
-      type: String,
-      required: true,
-    },
-    country: {
-      type: String,
-      required: true,
-    },
-    pinCode: {
-      type: Number,
-      required: true,
-    },
+
     phoneNo: {
       type: Number,
       required: true,
     },
+    state: {
+      type: String,
+      required: true,
+    },
+    // country: {
+    //   type: String,
+    //   required: true,
+    // },
+    // pinCode: {
+    //   type: Number,
+    //   required: true,
+    // },
   },
 
   orderItems: [
@@ -68,6 +69,11 @@ const orderSchema = mongoose.Schema({
     },
 
     status: {
+      type: String,
+      required: true,
+    },
+
+    sendPhoneNo: {
       type: String,
       required: true,
     },

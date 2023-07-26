@@ -28,7 +28,7 @@ import Shipping from "../layout/Shipping/shipping";
 import ComfirmOrder from "../layout/ConfirmOrder/confirmOrder";
 // import Payment from "../layout/Payment/payment";
 import KhaltiPayment from "../layout/Khalti/khalti";
-import Success from "../layout/Success/success.js";
+import OrderSuccess from "../layout/orderSuccess/orderSuccess.js";
 
 import Account from "../layout/UserAccount/account";
 import UpdateProfile from "../user/updateProfile/userUpdateProfile";
@@ -208,7 +208,10 @@ const Navbar = () => {
                 )
               }
             />
-            <Route path="/success" element={<Success />} />
+            <Route
+              path="/success"
+              element={isAuthenticated ? <OrderSuccess /> : <NotFound />}
+            />
 
             <Route
               path="/account"

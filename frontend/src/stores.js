@@ -18,6 +18,8 @@ import {
   forgotPasswordReducer,
 } from "./Redux/Reducer/userReducer";
 
+import { newOderReducer } from "./Redux/Reducer/newOrderReducer";
+
 import { cartReducer } from "./Redux/Reducer/cartReducer";
 
 //root_reducer
@@ -28,6 +30,7 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   forgotPassword: forgotPasswordReducer,
   cart: cartReducer,
+  newOrder: newOderReducer,
 });
 
 let initialState = {
