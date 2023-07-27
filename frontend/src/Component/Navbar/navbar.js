@@ -28,7 +28,9 @@ import Shipping from "../layout/Shipping/shipping";
 import ComfirmOrder from "../layout/ConfirmOrder/confirmOrder";
 // import Payment from "../layout/Payment/payment";
 import KhaltiPayment from "../layout/Khalti/khalti";
-import OrderSuccess from "../layout/orderSuccess/orderSuccess.js";
+import OrderSuccess from "../layout/orderSuccess/orderSuccess";
+import MyOrders from "../layout/myOrders/myOrders";
+import OrderDetails from "../layout/OrderDetails/orderDetails.js";
 
 import Account from "../layout/UserAccount/account";
 import UpdateProfile from "../user/updateProfile/userUpdateProfile";
@@ -211,6 +213,16 @@ const Navbar = () => {
             <Route
               path="/success"
               element={isAuthenticated ? <OrderSuccess /> : <NotFound />}
+            />
+
+            <Route
+              path="/orders"
+              element={isAuthenticated ? <MyOrders /> : <NotFound />}
+            />
+
+            <Route
+              path="/orders/:id"
+              element={isAuthenticated ? <OrderDetails /> : <NotFound />}
             />
 
             <Route

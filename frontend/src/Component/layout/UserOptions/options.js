@@ -36,7 +36,7 @@ const UserOptions = () => {
   console.log(ProfileImage);
 
   const actions = [
-    { icon: <ViewListIcon />, name: "Order", fun: order },
+    { icon: <ViewListIcon />, name: "Orders", fun: order },
     {
       icon: (
         <ShoppingCartIcon
@@ -72,7 +72,7 @@ const UserOptions = () => {
   }
 
   function order() {
-    navigate("/order");
+    navigate("/orders");
   }
 
   async function logout() {

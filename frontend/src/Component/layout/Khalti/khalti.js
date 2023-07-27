@@ -10,10 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import {
-  createOrder,
-  clearError,
-} from "../../../Redux/Actions/newOrderActions"; //
+import { createOrder, clearError } from "../../../Redux/Actions/orderActions"; //
 
 const KhaltiPayment = ({ khaltiApiKey }) => {
   const navigate = useNavigate();
@@ -45,7 +42,7 @@ const KhaltiPayment = ({ khaltiApiKey }) => {
   // quantity: 1;
   // stock: 3;
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
-  const { name, product, image } = cartItems;
+  // const { name, product, image } = cartItems;
   console.log(
     "shippingInfo is",
     shippingInfo,

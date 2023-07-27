@@ -18,7 +18,11 @@ import {
   forgotPasswordReducer,
 } from "./Redux/Reducer/userReducer";
 
-import { newOderReducer } from "./Redux/Reducer/newOrderReducer";
+import {
+  newOderReducer,
+  myOderReducer,
+  oderDetailsReducer,
+} from "./Redux/Reducer/orderReducer";
 
 import { cartReducer } from "./Redux/Reducer/cartReducer";
 
@@ -31,6 +35,8 @@ const rootReducer = combineReducers({
   forgotPassword: forgotPasswordReducer,
   cart: cartReducer,
   newOrder: newOderReducer,
+  myOrders: myOderReducer,
+  orderDetails: oderDetailsReducer,
 });
 
 let initialState = {
