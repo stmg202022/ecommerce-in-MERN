@@ -154,17 +154,29 @@ exports.createProductReviews = catchAsyncError(async (req, res, next) => {
 
   const product = await Product.findById(productId);
 
-  const isReviewed = product.reviews.find(
-    (rev) => rev.user.toString() === req.user._id
+  // const isReviewed = product.reviews.find(
+  //   (rev) => rev.user.toString() === req.user._id
+  // );
+
+  // if (isReviewed) {
+  //   product.reviews.forEach((rev) => {
+  //     //again and again review //update
+  //     if (rev.user.toString() === req.user._id) {
+  //       await((rev.rating = rating)), (rev.comment = comment);
+  //     }
+  //   });
+  // } else {
+  //   product.reviews.push(review);
+  //   product.numOfReviews = product.reviews.length;
+  // }
+
+  const existingReviewsIndex = product.reviews.findIndex(
+    (rev) => rev.user.id.toString() === req.user._id
   );
 
-  if (isReviewed) {
-    product.reviews.forEach((rev) => {
-      //again and again review //update
-      if (rev.user.toString() === req.user._id) {
-        await((rev.rating = rating)), (rev.comment = comment);
-      }
-    });
+  if (existingReviewsIndex !== -1) {
+    (product.reviews[existingReviewsIndex].rating = Number(rating)),
+      (product.reviews[existingReviewsIndex].comment = comment);
   } else {
     product.reviews.push(review);
     product.numOfReviews = product.reviews.length;

@@ -1,7 +1,8 @@
 import React from "react";
 import "./productCart.css";
 import { Link } from "react-router-dom";
-import ReactStars from "react-rating-stars-component";
+// import ReactStars from "react-rating-stars-component";
+import { Rating } from "@mui/material";
 import { getProductDetails } from "../../../../Redux/Actions/productActions";
 import { useDispatch } from "react-redux";
 
@@ -9,13 +10,19 @@ const ProductCard = ({ rounded, clickable, product }) => {
   const dispatch = useDispatch();
   const { _id, name, images, price, description, ratings } = product;
 
+  // const options = {
+  //   color: "black",
+  //   activeColor: "tomato",
+  //   size: window.innerWidth < 600 ? 20 : 25,
+  //   isHalf: true,
+  //   edit: false,
+  //   value: Number(ratings),
+  // };
+
   const options = {
-    color: "black",
-    activeColor: "tomato",
-    size: window.innerWidth < 600 ? 20 : 25,
-    isHalf: true,
-    edit: false,
-    value: Number(ratings),
+    size: "large",
+    value: ratings,
+    readOnly: true,
   };
 
   return (
@@ -33,7 +40,8 @@ const ProductCard = ({ rounded, clickable, product }) => {
         <div className="card-content">{description} </div>
         <div className="card-footer">
           <div>
-            <ReactStars {...options} />
+            {/* <ReactStars {...options} /> */}
+            <Rating {...options} className="productCartSpan" />
             <span>(230 reviews)</span>
           </div>
           <div className="card-footer">{`NRS:${price}`}/-</div>

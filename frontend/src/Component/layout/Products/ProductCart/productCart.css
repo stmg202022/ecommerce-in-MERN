@@ -44,6 +44,11 @@
   align-items: center;
 }
 
+.productCartSpan {
+  margin: 0.5vmax;
+  font: 300 0.7vmax "Roboto";
+}
+
 .product_card {
   margin: 50px auto;
 }

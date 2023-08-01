@@ -10,6 +10,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import {
   productReducer,
   productDetailReducer,
+  newReviewReducer,
 } from "./Redux/Reducer/productReducer";
 
 import {
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   newOrder: newOderReducer,
   myOrders: myOderReducer,
   orderDetails: oderDetailsReducer,
+  newReview: newReviewReducer,
 });
 
 let initialState = {

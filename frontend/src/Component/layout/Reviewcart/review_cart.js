@@ -1,18 +1,25 @@
 import React from "react";
-import ReactStars from "react-rating-stars-component";
+// import ReactStars from "react-rating-stars-component";
+import { Rating } from "@mui/material";
 import profileImage from "../../../images/profileImage.jpg";
 import "./review.css";
 const ReviewCart = ({ review }) => {
   //   return <div>{/* <p>{JSON.stringify(review)}</p> */}</div>;
   // console.log(JSON.stringify(review, null, "\t"));
 
+  // const options = {
+  //   count: 5,
+  //   size: window.innerWidth < 600 ? 20 : 25,
+  //   isHalf: true,
+  //   activeColor: "#ffd700",
+  //   value: Number(review.rating),
+  //   edit: false,
+  // };
+
   const options = {
-    count: 5,
-    size: window.innerWidth < 600 ? 20 : 25,
-    isHalf: true,
-    activeColor: "#ffd700",
+    size: "large",
     value: Number(review.rating),
-    edit: false,
+    readOnly: true,
   };
 
   return (
@@ -21,7 +28,9 @@ const ReviewCart = ({ review }) => {
       <p>
         <b>{review.name}</b>
       </p>
-      <ReactStars {...options} />
+      {/* <ReactStars {...options} /> */}
+      <Rating {...options} />
+
       <span>{review.comment}</span>
     </div>
   );

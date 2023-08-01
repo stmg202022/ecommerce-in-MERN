@@ -2,10 +2,17 @@ import {
   ALL_PRODUCT_REQUEST,
   ALL_PRODUCT_SUCCESS,
   ALL_PRODUCT_FAIL,
+  //
   CLEAR_ERROR,
+  //
   PRODUCT_DETAIL_REQUEST,
   PRODUCT_DETAIL_SUCCESS,
   PRODUCT_DETAIL_FAIL,
+  //
+  NEW_REVIEW_REQUEST,
+  NEW_REVIEW_SUCCESS,
+  // NEW_REVIEW_RESET,
+  NEW_REVIEW_FAIL,
 } from "../Constants/productConstant";
 
 import axios from "axios";
@@ -93,6 +100,51 @@ export const getProductDetails =
 // //       dispatch({ type: ALL_PRODUCT_FAIL, payload: err.response.data.message });
 // //     }
 // //   };
+
+//CREATE NEW REVIW FOR PRODUCT
+export const newReview = (myReviewFormData) => async (dispatch) => {
+
+  // console.log(myReviewFormData);
+
+  try {
+    await dispatch({ type: NEW_REVIEW_REQUEST });
+
+    const cookies = document.cookie.split(";");
+
+    let token = "";
+    cookies.forEach((cookie) => {
+      const [name, value] = cookie.trim().split("=");
+
+      if (name === "token") {
+        token = value;
+      }
+    });
+
+    const { data } = await axios.put(
+      `http://localhost:8080/api/v1/review`,
+      myReviewFormData,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+
+    console.log(data)
+
+    await dispatch({ type: NEW_REVIEW_SUCCESS, payload: data.success });
+
+    
+
+    // console.log(data.product);
+  } catch (error) {
+    dispatch({
+      type: NEW_REVIEW_FAIL,
+      payload: error.response.data.message,
+    });
+    // console.log(error.response.data.message);
+  }
+};
 
 //CLEARING ERROR
 export const clearError = () => async (dispatch) => {

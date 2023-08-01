@@ -19,14 +19,6 @@ const orderSchema = mongoose.Schema({
       type: String,
       required: true,
     },
-    // country: {
-    //   type: String,
-    //   required: true,
-    // },
-    // pinCode: {
-    //   type: Number,
-    //   required: true,
-    // },
   },
 
   orderItems: [
