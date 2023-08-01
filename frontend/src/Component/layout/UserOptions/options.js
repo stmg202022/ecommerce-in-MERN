@@ -60,7 +60,7 @@ const UserOptions = () => {
   }
 
   function dashBoard() {
-    navigate("/dashboard");
+    navigate("/admin/dashboard");
   }
 
   async function account() {

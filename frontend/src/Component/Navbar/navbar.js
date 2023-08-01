@@ -12,6 +12,7 @@ import "../Navbar/navbar.css";
 
 import { useSelector } from "react-redux";
 
+import Dashboard from "../admin/Dashboard/dashboard";
 import Home from "../layout/Home/home";
 import About from "../layout/About/about";
 import LoginSignUp from "../user/userLoginSignUp/userLoginSignUp";
@@ -240,6 +241,17 @@ const Navbar = () => {
               path="/password/update"
               element={
                 isAuthenticated ? <UpdatePassword /> : <Navigate to="/login" />
+              }
+            />
+
+            <Route
+              path="/admin/dashboard"
+              element={
+                isAuthenticated && user.role === "admin" ? (
+                  <Dashboard />
+                ) : (
+                  <NotFound />
+                )
               }
             />
 
