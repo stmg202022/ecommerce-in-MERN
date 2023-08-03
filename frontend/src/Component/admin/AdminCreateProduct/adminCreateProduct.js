@@ -92,6 +92,7 @@ const AdminCreateProduct = () => {
     setIsSubmit(true);
   };
 
+  //USE THIS CODE TO READR IMAGES FILES
   const createProductImageChange = (e) => {
     const files = Array.from(e.target.files);
 
