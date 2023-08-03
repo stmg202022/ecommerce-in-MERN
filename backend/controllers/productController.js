@@ -12,16 +12,17 @@ const cloudinary = require("cloudinary");
 exports.createProduct = catchAsyncError(async (req, res, next) => {
   //
 
+  // console.log("send data are=================", typeof req.body.images);
   //
   let images = [];
 
-  // if (req.body.images === "string") {
-  //   images.push(req.body.images);
-  // } else {
-  // images = req.body.images;
-  // }
+  if (typeof req.body.images === "string") {
+    images.push(req.body.images);
+  } else {
+    images = req.body.images;
+  }
 
-  images.push(req.body.images);
+  // images.push(req.body.images);
 
   const imageLink = [];
 
