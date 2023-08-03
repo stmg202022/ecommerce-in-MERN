@@ -14,6 +14,12 @@ import {
   CREATE_PRODUCT_FAIL,
   CREATE_PRODUCT_RESET,
 
+  //ADMIN PRODUCT CREATE (post)\
+  DELETE_PRODUCT_REQUEST,
+  DELETE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_FAIL,
+  DELETE_PRODUCT_RESET,
+
   //
   PRODUCT_DETAIL_REQUEST,
   PRODUCT_DETAIL_SUCCESS,
@@ -132,6 +138,45 @@ export const createProductReducer = (state = { success: null }, action) => {
       return {
         ...state,
         success: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+//(ADMIN) DELETE PRODUCT (delete)
+export const deleteProductRequest = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_PRODUCT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DELETE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: action.payload,
+      };
+
+    case DELETE_PRODUCT_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case DELETE_PRODUCT_RESET:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
       };
 
     default:

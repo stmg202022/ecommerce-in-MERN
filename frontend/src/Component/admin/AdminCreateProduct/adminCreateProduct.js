@@ -82,14 +82,14 @@ const AdminCreateProduct = () => {
 
     dispatch(adminCreateProduct(formData));
 
+    setIsSubmit(true);
+
     setName("");
     setPrice("");
     setCategory("");
     setDescription("");
     setImages([]);
     setImagesPreview([]);
-
-    setIsSubmit(true);
   };
 
   //USE THIS CODE TO READR IMAGES FILES

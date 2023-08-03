@@ -12,6 +12,11 @@ import {
   CREATE_PRODUCT_REQUEST,
   CREATE_PRODUCT_SUCCESS,
   CREATE_PRODUCT_FAIL,
+
+  //ADMIN DELETE PRODUCT (delete)
+  DELETE_PRODUCT_REQUEST,
+  DELETE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_FAIL,
   //
   PRODUCT_DETAIL_REQUEST,
   PRODUCT_DETAIL_SUCCESS,
@@ -109,6 +114,43 @@ export const adminCreateProduct = (formData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CREATE_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//ADMIN DELETE PRODUCT
+export const adminDeleteProduct = (id) => async (dispatch) => {
+  try {
+    await dispatch({ type: DELETE_PRODUCT_REQUEST });
+
+    const cookies = document.cookie.split(";");
+
+    let token = "";
+
+    cookies.forEach((cookie) => {
+      const [name, value] = cookie.trim().split("=");
+
+      if (name === "token") {
+        token = value;
+      }
+    });
+
+    const { data } = await axios.delete(
+      `http://localhost:8080/api/v1/product/${id}`,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+
+    console.log("data after deleting product", data);
+
+    await dispatch({ type: DELETE_PRODUCT_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({
+      type: DELETE_PRODUCT_FAIL,
       payload: error.response.data.message,
     });
   }

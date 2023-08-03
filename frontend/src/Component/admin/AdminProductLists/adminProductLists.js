@@ -14,9 +14,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 import {
   geAdminProducts,
+  adminDeleteProduct,
   clearError,
 } from "../../../Redux/Actions/productActions";
 import { useNavigate } from "react-router-dom";
+import { DELETE_PRODUCT_RESET } from "../../../Redux/Constants/productConstant";
 
 const AdminProductLists = () => {
   //
@@ -26,6 +28,14 @@ const AdminProductLists = () => {
   const { products, productsCount, error, loading } = useSelector(
     (state) => state.adminProducts
   );
+
+  const { error: deleteError, isDeleted } = useSelector(
+    (state) => state.deleteProduct
+  );
+
+  const deleteProductHandler = (id) => {
+    dispatch(adminDeleteProduct(id));
+  };
 
   const columns = [
     {
@@ -72,7 +82,7 @@ const AdminProductLists = () => {
             </Button>
 
             <Button>
-              <DeleteIcon />
+              <DeleteIcon onClick={() => deleteProductHandler(params.row.id)} />
             </Button>
           </Fragment>
         );
@@ -98,7 +108,18 @@ const AdminProductLists = () => {
       dispatch(clearError());
     }
     dispatch(geAdminProducts());
-  }, [dispatch, error]);
+
+    if (deleteError) {
+      toast.error(deleteError);
+      dispatch(clearError());
+    }
+
+    if (isDeleted) {
+      toast("Product Deleted SuccessFully.");
+      dispatch({ type: DELETE_PRODUCT_RESET });
+      // navigate("/admin/dashboard");
+    }
+  }, [dispatch, error, deleteError, isDeleted, navigate]);
 
   // const columns = [
   //   { field: "id", headerName: "Product ID", minWidth: 200, flex: 0.5 },

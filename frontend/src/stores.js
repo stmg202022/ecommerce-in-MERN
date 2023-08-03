@@ -13,6 +13,7 @@ import {
   newReviewReducer,
   getAdminpProductReducer,
   createProductReducer,
+  deleteProductRequest,
 } from "./Redux/Reducer/productReducer";
 
 import {
@@ -43,6 +44,7 @@ const rootReducer = combineReducers({
   newReview: newReviewReducer,
   adminProducts: getAdminpProductReducer,
   createProduct: createProductReducer,
+  deleteProduct: deleteProductRequest,
 });
 
 let initialState = {

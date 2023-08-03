@@ -32,12 +32,16 @@ const Sidebar = () => {
           defaultEndIcon={<ImportExportIcon />}
         >
           <TreeItem nodeId="1" label="Products">
-            <Link to="/admin/products">
-              <TreeItem nodeId="2" label="All" icon={<PostAddIcon />} />
-            </Link>
-            <Link to="/admin/createproduct">
-              <TreeItem nodeId="3" label="Create" icon={<AddIcon />} />
-            </Link>
+            <div>
+              <Link to="/admin/products">
+                <TreeItem nodeId="2" label="All" icon={<PostAddIcon />} />
+              </Link>
+            </div>
+            <div>
+              <Link to="/admin/createproduct">
+                <TreeItem nodeId="3" label="Create" icon={<AddIcon />} />
+              </Link>
+            </div>
           </TreeItem>
         </TreeView>
       </Link>
