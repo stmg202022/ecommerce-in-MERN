@@ -6,6 +6,7 @@ const router = express.Router();
 router
   .get("/products", productController.getAllProducts) //get all
   .get("/product/:id", productController.getProductDetails) //get
+  .get("/admin/products", productController.getAdminProducts) // get ADMIN PRODUCT
   //create
   .post(
     "/product/new",

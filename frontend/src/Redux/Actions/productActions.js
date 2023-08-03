@@ -3,7 +3,15 @@ import {
   ALL_PRODUCT_SUCCESS,
   ALL_PRODUCT_FAIL,
   //
-  CLEAR_ERROR,
+  // FOR ADMIN ONLY
+  ADMIN_PRODUCT_REQUEST,
+  ADMIN_PRODUCT_SUCCESS,
+  ADMIN_PRODUCT_FAIL,
+
+  //ADMIN CREATE PRODUCT (post)
+  CREATE_PRODUCT_REQUEST,
+  CREATE_PRODUCT_SUCCESS,
+  CREATE_PRODUCT_FAIL,
   //
   PRODUCT_DETAIL_REQUEST,
   PRODUCT_DETAIL_SUCCESS,
@@ -13,6 +21,7 @@ import {
   NEW_REVIEW_SUCCESS,
   // NEW_REVIEW_RESET,
   NEW_REVIEW_FAIL,
+  CLEAR_ERROR,
 } from "../Constants/productConstant";
 
 import axios from "axios";
@@ -46,6 +55,64 @@ export const getProducts =
       dispatch({ type: ALL_PRODUCT_FAIL, payload: err.response.data.message });
     }
   };
+
+//ADMIN GET ALL PRODUCTS
+export const geAdminProducts = () => async (dispatch) => {
+  try {
+    await dispatch({ type: ADMIN_PRODUCT_REQUEST });
+
+    const { data } = await axios.get(
+      `http://localhost:8080/api/v1/admin/products`
+    );
+
+    await dispatch({ type: ADMIN_PRODUCT_SUCCESS, payload: data });
+
+    console.log("adminProducts are===============", data);
+  } catch (error) {
+    dispatch({
+      type: ADMIN_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+    // console.log(error.response.data.message);
+  }
+};
+
+//ADMIN CREATE PRODUCT
+export const adminCreateProduct = (formData) => async (dispatch) => {
+  try {
+    await dispatch({ type: CREATE_PRODUCT_REQUEST });
+
+    const cookies = document.cookie.split(";");
+
+    let token = "";
+    cookies.forEach((cookie) => {
+      const [name, value] = cookie.trim().split("=");
+
+      if (name === "token") {
+        token = value;
+      }
+    });
+
+    const { data } = await axios.post(
+      `http://localhost:8080/api/v1/product/new`,
+      formData,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+
+    console.log(data);
+
+    await dispatch({ type: CREATE_PRODUCT_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: CREATE_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 //GETING A PRODUCT DETAIL //single product
 export const getProductDetails =
@@ -103,7 +170,6 @@ export const getProductDetails =
 
 //CREATE NEW REVIW FOR PRODUCT
 export const newReview = (myReviewFormData) => async (dispatch) => {
-
   // console.log(myReviewFormData);
 
   try {
@@ -130,11 +196,9 @@ export const newReview = (myReviewFormData) => async (dispatch) => {
       }
     );
 
-    console.log(data)
+    console.log(data);
 
     await dispatch({ type: NEW_REVIEW_SUCCESS, payload: data.success });
-
-    
 
     // console.log(data.product);
   } catch (error) {

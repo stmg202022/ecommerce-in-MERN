@@ -11,6 +11,8 @@ import {
   productReducer,
   productDetailReducer,
   newReviewReducer,
+  getAdminpProductReducer,
+  createProductReducer,
 } from "./Redux/Reducer/productReducer";
 
 import {
@@ -39,6 +41,8 @@ const rootReducer = combineReducers({
   myOrders: myOderReducer,
   orderDetails: oderDetailsReducer,
   newReview: newReviewReducer,
+  adminProducts: getAdminpProductReducer,
+  createProduct: createProductReducer,
 });
 
 let initialState = {

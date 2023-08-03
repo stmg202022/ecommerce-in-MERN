@@ -12,7 +12,11 @@ import "../Navbar/navbar.css";
 
 import { useSelector } from "react-redux";
 
+//ADMIN CASE
 import Dashboard from "../admin/Dashboard/dashboard";
+import AdminProductList from "../admin/AdminProductLists/adminProductLists";
+import CreateProduct from "../admin/AdminCreateProduct/adminCreateProduct";
+
 import Home from "../layout/Home/home";
 import About from "../layout/About/about";
 import LoginSignUp from "../user/userLoginSignUp/userLoginSignUp";
@@ -249,6 +253,28 @@ const Navbar = () => {
               element={
                 isAuthenticated && user.role === "admin" ? (
                   <Dashboard />
+                ) : (
+                  <NotFound />
+                )
+              }
+            />
+
+            <Route
+              path="/admin/products"
+              element={
+                isAuthenticated && user.role === "admin" ? (
+                  <AdminProductList />
+                ) : (
+                  <NotFound />
+                )
+              }
+            />
+
+            <Route
+              path="/admin/createproduct"
+              element={
+                isAuthenticated && user.role === "admin" ? (
+                  <CreateProduct />
                 ) : (
                   <NotFound />
                 )

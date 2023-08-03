@@ -3,6 +3,17 @@ import {
   ALL_PRODUCT_SUCCESS,
   ALL_PRODUCT_FAIL,
 
+  //ADMIN PRODUCTS GET
+  ADMIN_PRODUCT_REQUEST,
+  ADMIN_PRODUCT_SUCCESS,
+  ADMIN_PRODUCT_FAIL,
+
+  //ADMIN PRODUCT CREATE (post)\
+  CREATE_PRODUCT_REQUEST,
+  CREATE_PRODUCT_SUCCESS,
+  CREATE_PRODUCT_FAIL,
+  CREATE_PRODUCT_RESET,
+
   //
   PRODUCT_DETAIL_REQUEST,
   PRODUCT_DETAIL_SUCCESS,
@@ -49,6 +60,78 @@ export const productReducer = (state = { products: [] }, action) => {
       return {
         ...state,
         error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+//( ADMIN ) ALL PRODUCTS GET
+export const getAdminpProductReducer = (
+  state = { products: [], productsCount: null },
+  action
+) => {
+  switch (action.type) {
+    //
+    case ADMIN_PRODUCT_REQUEST:
+      return {
+        loading: true,
+        products: [],
+      };
+
+    case ADMIN_PRODUCT_SUCCESS:
+      return {
+        loading: false,
+        products: action.payload.products,
+        productsCount: action.payload.productsCount,
+      };
+
+    case ADMIN_PRODUCT_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+//( ADMIN ) CREATE PRODUCT (post)
+export const createProductReducer = (state = { success: null }, action) => {
+  switch (action.type) {
+    case CREATE_PRODUCT_REQUEST:
+      return {
+        loading: true,
+        success: null, // Set success to null when the request is initiated
+        ...state,
+      };
+
+    case CREATE_PRODUCT_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.success,
+        product: action.payload.product,
+      };
+
+    case CREATE_PRODUCT_FAIL:
+      return {
+        loading: false,
+        success: false,
+        error: action.payload,
+      };
+
+    case CREATE_PRODUCT_RESET:
+      return {
+        ...state,
+        success: null,
       };
 
     default:

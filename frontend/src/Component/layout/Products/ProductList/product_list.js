@@ -21,7 +21,14 @@ import { Typography } from "@mui/material";
 import Slider from "@mui/material/Slider";
 
 //for categiries list_map
-const categories = ["Smartphones", "Bike", "Laptop", "Camera"];
+const categories = [
+  "Smartphones",
+  "Bike",
+  "Laptop",
+  "Camera",
+  "Shoes",
+  "T-Shirt",
+];
 
 const ProductList = () => {
   const dispatch = useDispatch();

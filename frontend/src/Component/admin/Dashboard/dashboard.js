@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Sidebar from "../Sidebar/sidebar.js";
 
 import "./dashboard.css";
@@ -8,8 +9,31 @@ import { Link } from "react-router-dom";
 import LineChart from "../chart/lineChart.js";
 import DoughnutChart from "../chart/doughnutChart.js";
 
+import { geAdminProducts } from "../../../Redux/Actions/productActions.js";
+
 const Dashboard = () => {
   //
+
+  const dispatch = useDispatch();
+
+  const { products, productsCount } = useSelector(
+    (state) => state.adminProducts
+  );
+
+  useEffect(() => {
+    dispatch(geAdminProducts());
+  }, [dispatch]);
+
+  //
+
+  let outOfStock = 0;
+
+  products &&
+    products.forEach((product) => {
+      if (product.stock === 0) {
+        outOfStock += 1;
+      }
+    });
 
   const data = {
     labels: ["Initial Amount", "Total Amount"],
@@ -27,7 +51,7 @@ const Dashboard = () => {
     labels: ["OUTOFSTOCK", "INSTOCK"],
     datasets: [
       {
-        data: [10, 30],
+        data: [outOfStock, productsCount - outOfStock],
         backgroundColor: ["red", "blue"],
       },
     ],
@@ -50,7 +74,7 @@ const Dashboard = () => {
             <div className="dashboardSummeryBox2">
               <Link to="/admin/products">
                 <p>Products</p>
-                <p>50</p>
+                <p>{productsCount}</p>
               </Link>
               <Link to="/admin/orders">
                 <p>Orders</p>
