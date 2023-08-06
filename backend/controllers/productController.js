@@ -134,20 +134,73 @@ exports.getProductDetails = catchAsyncError(async (req, res, next) => {
 
 //UPDATE
 exports.updateProduct = catchAsyncError(async (req, res, next) => {
-  const id = req.params.id;
-
-  console.log(id);
-
-  console.log(req.body);
-
   try {
-    const product = await Product.findByIdAndUpdate({ _id: id }, req.body, {
-      new: true,
+    const id = req.params.id;
+
+    console.log(id);
+
+    let product = await Product.findById(req.params.id);
+
+    console.log(product);
+
+    console.log(
+      "this is from frontend images:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::",
+      req.body.images
+    );
+
+    if (req.body.images) {
+      let images = [];
+
+      if (typeof req.body.images === "string") {
+        images.push(req.body.images);
+      } else {
+        images = req.body.images;
+      }
+
+      if (images !== undefined) {
+        for (let i = 0; i < product.images.length; i++) {
+          await cloudinary.v2.uploader.destroy(product.images[i].public_id);
+        }
+      }
+
+      let imageLink = [];
+
+      for (let i = 0; i < images.length; i++) {
+        const result = await cloudinary.v2.uploader.upload(images[i], {
+          folder: "products",
+        });
+
+        imageLink.push({
+          public_id: result.public_id,
+          url: result.secure_url,
+        });
+      }
+
+      req.body.images = imageLink;
+
+      console.log("this is image link", req.body.images);
+
+      console.log("this is images link by cloudinary", imageLink);
+
+      product = await Product.findByIdAndUpdate({ _id: id }, req.body, {
+        new: true,
+      });
+
+      console.log("updated product is this:", product);
+    } else {
+      // next(new ErrorHandler("upload your product images", 404));
+
+      req.body.images = product.images;
+
+      product = await Product.findByIdAndUpdate({ _id: id }, req.body, {
+        new: true,
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      product,
     });
-
-    // console.log(product);
-
-    res.status(200).json(product);
   } catch (err) {
     // res.status(500).json({
     //   success: false,

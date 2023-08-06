@@ -17,6 +17,11 @@ import {
   DELETE_PRODUCT_REQUEST,
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_FAIL,
+
+  //ADMIN PRODUCT UPDATE (put)
+  UPDATE_PRODUCT_REQUEST,
+  UPDATE_PRODUCT_SUCCESS,
+  UPDATE_PRODUCT_FAIL,
   //
   PRODUCT_DETAIL_REQUEST,
   PRODUCT_DETAIL_SUCCESS,
@@ -151,6 +156,42 @@ export const adminDeleteProduct = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//ADMIN UPDATE PRODUCT
+export const adminUpdateProduct = (id, productData) => async (dispatch) => {
+  try {
+    await dispatch({ type: UPDATE_PRODUCT_REQUEST });
+
+    const cookies = document.cookie.split(";");
+
+    let token = "";
+
+    cookies.forEach((cookie) => {
+      const [name, value] = cookie.trim().split("=");
+
+      if (name === "token") {
+        token = value;
+      }
+    });
+
+    const { data } = await axios.put(
+      `http://localhost:8080/api/v1/product/${id}`,
+      productData,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+
+    await dispatch({ type: UPDATE_PRODUCT_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PRODUCT_FAIL,
       payload: error.response.data.message,
     });
   }

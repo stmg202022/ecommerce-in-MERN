@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import Dashboard from "../admin/Dashboard/dashboard";
 import AdminProductList from "../admin/AdminProductLists/adminProductLists";
 import CreateProduct from "../admin/AdminCreateProduct/adminCreateProduct";
+import UpdateProduct from "../admin/AdminEditProduct/adminEditProduct";
 
 import Home from "../layout/Home/home";
 import About from "../layout/About/about";
@@ -275,6 +276,17 @@ const Navbar = () => {
               element={
                 isAuthenticated && user.role === "admin" ? (
                   <CreateProduct />
+                ) : (
+                  <NotFound />
+                )
+              }
+            />
+
+            <Route
+              path="/products/edit/:id"
+              element={
+                isAuthenticated && user.role === "admin" ? (
+                  <UpdateProduct />
                 ) : (
                   <NotFound />
                 )

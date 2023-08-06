@@ -1,4 +1,4 @@
-.createNewProductContainer {
+.adminUpdateProductContainer {
   width: 100%;
   height: 100vh;
   box-sizing: border-box;
@@ -8,11 +8,11 @@
   flex-direction: column;
 }
 
-.createNewProductContainer h1 {
+.adminUpdateProductContainer h1 {
   color: rgba(0, 0, 0, 0.733);
   text-align: center;
 }
-.createProductForm {
+.adminUpdateProductForm {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,15 +27,15 @@
   background-color: white;
 }
 
-.createProductForm > div {
+.adminUpdateProductForm > div {
   display: flex;
   width: 100%;
   align-items: center;
 }
 
-.createProductForm > div > input,
-.createProductForm > div > select,
-.createProductForm > div > textarea {
+.adminUpdateProductForm > div > input,
+.adminUpdateProductForm > div > select,
+.adminUpdateProductForm > div > textarea {
   padding: 1vmax 4vmax;
   padding-right: 1vmax;
   width: 100%;
@@ -44,13 +44,13 @@
   outline: none;
 }
 
-.createProductForm > div > svg {
+.adminUpdateProductForm > div > svg {
   position: absolute;
   transform: translate(1vmax);
   /* color: rgba(0, 0, 0, 0.267); */
 }
 
-#createProductBtn {
+#updateProductBtn {
   background-color: tomato;
   font-size: 20px;
   color: white;
@@ -63,26 +63,26 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
 }
 
-#createProductBtn:hover {
+#updateProductBtn:hover {
   background-color: rgb(179, 66, 45);
 }
 
-.createProductFormImage {
+.updateProductFormImage {
   width: 100%;
   overflow: auto;
 }
 
-.createProductFormImage > img {
+.updateProductFormImage > img {
   width: 3vmax;
   margin: 0 0.5vmax;
 }
 
-.createProductFormImage > input {
+.updateProductFormImage > input {
   display: flex;
   padding: 0%;
 }
 
-.createProductFormImage > input::file-selector-button {
+.updateProductFormImage > input::file-selector-button {
   cursor: pointer;
   width: 100%;
   z-index: 2;
@@ -95,16 +95,16 @@
   background-color: rgb(255, 255, 255);
 }
 
-.createProductFormImage > input::file-selector-button:hover {
+.updateProductFormImage > input::file-selector-button:hover {
   background-color: rgb(225, 225, 225);
 }
 
 @media screen and (max-width: 600px) {
-  #createProductForm {
+  #adminUpdateProductForm {
     padding: 5vmax;
   }
 
-  .createProductForm > div > input {
+  .adminUpdateProductForm > div > input {
     padding: 2.5vmax 5vmax;
     font-size: 13px;
   }

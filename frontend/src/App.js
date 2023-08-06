@@ -5,10 +5,11 @@ import Loader from "./Component/layout/Loader/loader";
 
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "./Redux/Actions/userActions";
+// import { }
 
 import "./App.css";
 
-const App = () => {
+export const App = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const { isAuthenticated } = useSelector((state) => state.users);
