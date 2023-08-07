@@ -11,6 +11,8 @@ import DoughnutChart from "../chart/doughnutChart.js";
 
 import { adminGetAllProducts } from "../../../Redux/Actions/productActions.js";
 
+import { adminGetAllOrders } from "../../../Redux/Actions/orderActions.js";
+
 const Dashboard = () => {
   //
 
@@ -20,8 +22,12 @@ const Dashboard = () => {
     (state) => state.adminProducts
   );
 
+  const { orders } = useSelector((state) => state.allOrders);
+
   useEffect(() => {
     dispatch(adminGetAllProducts());
+
+    dispatch(adminGetAllOrders());
   }, [dispatch]);
 
   //
@@ -78,7 +84,7 @@ const Dashboard = () => {
               </Link>
               <Link to="/admin/orders">
                 <p>Orders</p>
-                <p>4</p>
+                <p>{orders && orders.length}</p>
               </Link>
               <Link to="/admin/users">
                 <p>Users</p>
