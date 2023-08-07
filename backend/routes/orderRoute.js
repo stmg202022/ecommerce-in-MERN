@@ -36,7 +36,7 @@ router.get(
 
 //update order status --admin
 router.put(
-  "/admin/order/:id",
+  "/admin/update/order/:id",
   isAuthenticatedUser,
   authorizRoles("admin"),
   updateOrder

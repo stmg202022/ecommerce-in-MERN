@@ -192,7 +192,7 @@ export const deleteProductReducer = (state = {}, action) => {
 
 //(ADMIN) UPDATE PRODUCT (put)
 
-export const adminUpdateProduct = (state = {}, action) => {
+export const adminUpdateProductReducer = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_PRODUCT_REQUEST:
       return {

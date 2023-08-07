@@ -1,0 +1,12 @@
+.ordersDetails {
+  display: flex;
+  justify-content: space-between;
+}
+
+.orderDetailsPage {
+  flex: 2;
+}
+
+.updateOrder {
+  flex: 1;
+}

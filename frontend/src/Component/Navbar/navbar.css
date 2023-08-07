@@ -31,7 +31,7 @@
 /* Navbar CSS */
 .navbar {
   position: fixed;
-  z-index: 2;
+  z-index: 5;
   /* background-color: var(--maincolor); */
   background-color: white;
   height: 100vh;

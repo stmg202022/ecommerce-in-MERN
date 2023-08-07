@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import {
-  geAdminProducts,
+  adminGetAllProducts,
   adminDeleteProduct,
   clearError,
 } from "../../../Redux/Actions/productActions";
@@ -107,7 +107,7 @@ const AdminProductLists = () => {
       toast.error(error);
       dispatch(clearError());
     }
-    dispatch(geAdminProducts());
+    dispatch(adminGetAllProducts());
 
     if (deleteError) {
       toast.error(deleteError);

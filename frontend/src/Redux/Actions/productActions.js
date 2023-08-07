@@ -67,7 +67,7 @@ export const getProducts =
   };
 
 //ADMIN GET ALL PRODUCTS
-export const geAdminProducts = () => async (dispatch) => {
+export const adminGetAllProducts = () => async (dispatch) => {
   try {
     await dispatch({ type: ADMIN_PRODUCT_REQUEST });
 

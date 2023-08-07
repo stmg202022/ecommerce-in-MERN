@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import LineChart from "../chart/lineChart.js";
 import DoughnutChart from "../chart/doughnutChart.js";
 
-import { geAdminProducts } from "../../../Redux/Actions/productActions.js";
+import { adminGetAllProducts } from "../../../Redux/Actions/productActions.js";
 
 const Dashboard = () => {
   //
@@ -21,7 +21,7 @@ const Dashboard = () => {
   );
 
   useEffect(() => {
-    dispatch(geAdminProducts());
+    dispatch(adminGetAllProducts());
   }, [dispatch]);
 
   //

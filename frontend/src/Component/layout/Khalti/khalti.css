@@ -15,14 +15,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 .paybutton {
   background-color: purple;
-  /* backgroundColor: "purple",
-  padding: "10px",
-  color: "white",
-  cursor: "pointer",
-  fontWeight: "bold",
-  border: "1px solid white", */
+  color: white;
+  cursor: pointer;
+  border: 1px solid white;
+  padding: 20px;
+  border-radius: 4px;
+  font-size: 20px;
 }

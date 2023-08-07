@@ -14,7 +14,7 @@ import {
   getAdminpProductReducer,
   createProductReducer,
   deleteProductReducer,
-  adminUpdateProduct,
+  adminUpdateProductReducer,
 } from "./Redux/Reducer/productReducer";
 
 import {
@@ -27,6 +27,9 @@ import {
   newOderReducer,
   myOderReducer,
   oderDetailsReducer,
+  adminGetAllOrdersReducer,
+  adminUpdateOrdersReducer,
+  adminDeleteOrdersReducer,
 } from "./Redux/Reducer/orderReducer";
 
 import { cartReducer } from "./Redux/Reducer/cartReducer";
@@ -46,7 +49,10 @@ const rootReducer = combineReducers({
   adminProducts: getAdminpProductReducer,
   createProduct: createProductReducer,
   deleteProduct: deleteProductReducer,
-  updateProduct: adminUpdateProduct,
+  updateProduct: adminUpdateProductReducer,
+  allOrders: adminGetAllOrdersReducer,
+  updateOrders: adminUpdateOrdersReducer,
+  deleteOrders: adminDeleteOrdersReducer,
 });
 
 let initialState = {

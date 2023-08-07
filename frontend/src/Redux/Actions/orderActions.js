@@ -15,6 +15,21 @@ import {
   ORDER_DETALIS_SUCCESS,
   ORDER_DETALIS_FAIL,
   //
+
+  //AMDIN GET ALL ORDERS
+  ALL_ORDER_REQUEST,
+  ALL_ORDER_SUCCESS,
+  ALL_ORDER_FAIL,
+  //AMDIN UPDATE  ORDERS
+  UPDATE_ORDER_REQUEST,
+  UPDATE_ORDER_SUCCESS,
+  UPDATE_ORDER_FAIL,
+  //AMDIN DELETE ORDERS
+  DELETE_ORDER_REQUEST,
+  DELETE_ORDER_SUCCESS,
+  DELETE_ORDER_FAIL,
+
+  //
   CLEAR_ERROR,
 } from "../Constants/orderConstant";
 
@@ -128,6 +143,109 @@ export const getOrderDetails = (id) => async (dispatch) => {
     dispatch({
       type: ORDER_DETALIS_FAIL,
       payload: error.response.message,
+    });
+  }
+};
+
+//ADMIN GET ALL ORDERS
+export const adminGetAllOrders = () => async (dispatch) => {
+  try {
+    await dispatch({ type: ALL_ORDER_REQUEST });
+
+    const cookies = document.cookie.split(";");
+
+    let token = "";
+    cookies.forEach((cookie) => {
+      const [name, value] = cookie.trim().split("=");
+
+      if (name === "token") {
+        token = value;
+      }
+    });
+
+    const { data } = await axios.get(
+      "http://localhost:8080/api/v1/admin/orders",
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+
+    await dispatch({ type: ALL_ORDER_SUCCESS, payload: data.orders });
+  } catch (error) {
+    dispatch({
+      type: ALL_ORDER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//ADMIN UPDATE ALL ORDERS
+export const adminUpdateOrders = (id, orderData) => async (dispatch) => {
+  try {
+    await dispatch({ type: UPDATE_ORDER_REQUEST });
+
+    const cookies = document.cookie.split(";");
+
+    let token = "";
+    cookies.forEach((cookie) => {
+      const [name, value] = cookie.trim().split("=");
+
+      if (name === "token") {
+        token = value;
+      }
+    });
+
+    const { data } = await axios.put(
+      `http://localhost:8080/api/v1/admin/update/order/${id}`,
+      orderData,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+
+    await dispatch({ type: UPDATE_ORDER_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_ORDER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//ADMIN UPDATE ALL ORDERS
+export const adminDeleteOrders = (id) => async (dispatch) => {
+  try {
+    await dispatch({ type: DELETE_ORDER_REQUEST });
+
+    const cookies = document.cookie.split(";");
+
+    let token = "";
+    cookies.forEach((cookie) => {
+      const [name, value] = cookie.trim().split("=");
+
+      if (name === "token") {
+        token = value;
+      }
+    });
+
+    const { data } = await axios.delete(
+      `http://localhost:8080/api/v1/admin/order/${id}`,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+
+    await dispatch({ type: DELETE_ORDER_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({
+      type: DELETE_ORDER_FAIL,
+      payload: error.response.data.message,
     });
   }
 };

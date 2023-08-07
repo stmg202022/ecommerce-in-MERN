@@ -148,14 +148,13 @@ const KhaltiPayment = ({ khaltiApiKey }) => {
       <div className="khaltiContainer">
         <div className="khaltitForm">
           <div className="khaltiForm_content">
-            <h1>Payment</h1>
+            <h1>Payment </h1>
+
             <button
-              onClick={() =>
-                checkout.show({ amount: Math.round(totalPrice / 100) })
-              }
+              onClick={() => checkout.show({ amount: totalPrice * 100 })}
               className="paybutton"
             >
-              Pay via Khalti
+              Pay via Khalti Rs.{totalPrice}/-
             </button>
           </div>
         </div>
