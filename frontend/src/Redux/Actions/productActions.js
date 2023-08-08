@@ -31,6 +31,19 @@ import {
   NEW_REVIEW_SUCCESS,
   // NEW_REVIEW_RESET,
   NEW_REVIEW_FAIL,
+  //
+
+  //GET ALL REVIEWS BY ADMIN
+  ALL_REVIEW_REQUEST,
+  ALL_REVIEW_SUCCESS,
+  ALL_REVIEW_FAIL,
+
+  //DELETE PRODUCT REVIEW BY USING PRODUCT_ID AND REVIEW_ID (ADMIN)
+  DELETE_REVIEW_REQUEST,
+  DELETE_REVIEW_SUCCESS,
+  DELETE_REVIEW_FAIL,
+
+  //
   CLEAR_ERROR,
 } from "../Constants/productConstant";
 
@@ -293,7 +306,80 @@ export const newReview = (myReviewFormData) => async (dispatch) => {
   }
 };
 
+//GET ALL REVIWS OF PRODUCT BY ID (ADMIN)
+export const getAllReviews = (id) => async (dispatch) => {
+  try {
+    await dispatch({ type: ALL_REVIEW_REQUEST });
+
+    const cookies = document.cookie.split(";");
+
+    let token = "";
+    cookies.forEach((cookie) => {
+      const [name, value] = cookie.trim().split("=");
+
+      if (name === "token") {
+        token = value;
+      }
+    });
+
+    const { data } = await axios.get(
+      `http://localhost:8080/api/v1/reviews?productId=${id}`,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+
+    console.log("Reviews list are:", data.reviews);
+
+    await dispatch({ type: ALL_REVIEW_SUCCESS, payload: data.reviews });
+  } catch (error) {
+    dispatch({
+      type: ALL_REVIEW_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//DELETE REVIW OF PRODUCT BY PRODUCT_ID  AND REVIEW_ID (ADMIN)
+export const deleteProductReviews =
+  (reviewId, productId) => async (dispatch) => {
+    try {
+      await dispatch({ type: DELETE_REVIEW_REQUEST });
+
+      const cookies = document.cookie.split(";");
+
+      let token = "";
+      cookies.forEach((cookie) => {
+        const [name, value] = cookie.trim().split("=");
+
+        if (name === "token") {
+          token = value;
+        }
+      });
+
+      const { data } = await axios.delete(
+        `http://localhost:8080/api/v1/reviews?id=${reviewId}&productId=${productId}`,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+
+      console.log("Reviews list are:", data);
+
+      await dispatch({ type: DELETE_REVIEW_SUCCESS, payload: data.success });
+    } catch (error) {
+      dispatch({
+        type: DELETE_REVIEW_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+
 //CLEARING ERROR
 export const clearError = () => async (dispatch) => {
-  dispatch({ type: CLEAR_ERROR });
+  await dispatch({ type: CLEAR_ERROR });
 };

@@ -17,10 +17,11 @@ import Dashboard from "../admin/Dashboard/dashboard";
 import AdminProductList from "../admin/AdminProductLists/adminProductLists";
 import CreateProduct from "../admin/AdminCreateProduct/adminCreateProduct";
 import UpdateProduct from "../admin/AdminEditProduct/adminEditProduct";
-import OrderList from "../admin/AdminGetOrderList/admiGetOrderList";
+import OrderList from "../admin/AdminGetOrderList/adminGetOrderList";
 import UpdateOrder from "../admin/AdminUpdateOrder/adminUpdateOrder";
 import UsersList from "../admin/UsersList/usersList";
 import UserUpdate from "../admin/UserUpdate/userUpdate";
+import ProductReviews from "../admin/ProductReviews/productReviews";
 
 import Home from "../layout/Home/home";
 import About from "../layout/About/about";
@@ -335,6 +336,17 @@ const Navbar = () => {
               element={
                 isAuthenticated && user.role === "admin" ? (
                   <UserUpdate />
+                ) : (
+                  <NotFound />
+                )
+              }
+            />
+
+            <Route
+              path="/admin/reviews"
+              element={
+                isAuthenticated && user.role === "admin" ? (
+                  <ProductReviews />
                 ) : (
                   <NotFound />
                 )

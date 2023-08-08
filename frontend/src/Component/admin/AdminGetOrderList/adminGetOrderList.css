@@ -1,3 +1,11 @@
+.greenColor {
+  color: green !important;
+}
+
+.redColor {
+  color: red !important;
+}
+
 .productListContainer {
   width: 100%;
   box-sizing: border-box;
@@ -25,7 +33,7 @@
 
 .productListTable div {
   font: 300 1vmax "Roboto";
-  color: rgba(0, 0, 0, 0.637);
+  /* color: rgba(0, 0, 0, 0.637); */
   border: none !important;
 }
 

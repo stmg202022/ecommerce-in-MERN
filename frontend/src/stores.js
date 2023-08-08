@@ -15,6 +15,8 @@ import {
   createProductReducer,
   deleteProductReducer,
   adminUpdateProductReducer,
+  productReviewsReducer,
+  deleteReviewsReducer,
 } from "./Redux/Reducer/productReducer";
 
 import {
@@ -62,6 +64,8 @@ const rootReducer = combineReducers({
   allUsers: getAllUsersReducer,
   deleteUser: deleteUsersReducer,
   updateUser: updateUsersReducer,
+  productReviews: productReviewsReducer,
+  deleteReview: deleteReviewsReducer,
 });
 
 let initialState = {

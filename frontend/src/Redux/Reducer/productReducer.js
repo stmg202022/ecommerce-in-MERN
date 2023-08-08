@@ -26,6 +26,17 @@ import {
   UPDATE_PRODUCT_FAIL,
   UPDATE_PRODUCT_RESET,
 
+  //GET ALL REVIEWS BY ADMIN
+  ALL_REVIEW_REQUEST,
+  ALL_REVIEW_SUCCESS,
+  ALL_REVIEW_FAIL,
+
+  // DELETE REVIEWS BY ADMIN USING ID
+  DELETE_REVIEW_REQUEST,
+  DELETE_REVIEW_SUCCESS,
+  DELETE_REVIEW_FAIL,
+  DELETE_REVIEW_RESET,
+
   //
   PRODUCT_DETAIL_REQUEST,
   PRODUCT_DETAIL_SUCCESS,
@@ -191,7 +202,6 @@ export const deleteProductReducer = (state = {}, action) => {
 };
 
 //(ADMIN) UPDATE PRODUCT (put)
-
 export const adminUpdateProductReducer = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_PRODUCT_REQUEST:
@@ -292,6 +302,78 @@ export const newReviewReducer = (state = {}, action) => {
       return {
         ...state,
         success: false,
+      };
+
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+//ADMIN GET ALL THE REVIEWS
+export const productReviewsReducer = (state = { reviews: [] }, action) => {
+  switch (action.type) {
+    case ALL_REVIEW_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case ALL_REVIEW_SUCCESS:
+      return {
+        loading: false,
+        reviews: action.payload,
+      };
+
+    case ALL_REVIEW_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+//ADMIN DELETE  THE REVIEWS BY ID
+export const deleteReviewsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_REVIEW_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case DELETE_REVIEW_SUCCESS:
+      return {
+        loading: false,
+        isDeleted: action.payload,
+      };
+
+    case DELETE_REVIEW_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case DELETE_REVIEW_RESET:
+      return {
+        ...state,
+        isDeleted: false,
       };
 
     case CLEAR_ERROR:
