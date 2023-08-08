@@ -12,6 +12,7 @@ import DoughnutChart from "../chart/doughnutChart.js";
 import { adminGetAllProducts } from "../../../Redux/Actions/productActions.js";
 
 import { adminGetAllOrders } from "../../../Redux/Actions/orderActions.js";
+import { getAllUsers } from "../../../Redux/Actions/userActions.js";
 
 const Dashboard = () => {
   //
@@ -24,10 +25,14 @@ const Dashboard = () => {
 
   const { orders } = useSelector((state) => state.allOrders);
 
+  const { users } = useSelector((state) => state.allUsers);
+
   useEffect(() => {
     dispatch(adminGetAllProducts());
 
     dispatch(adminGetAllOrders());
+
+    dispatch(getAllUsers());
   }, [dispatch]);
 
   //
@@ -88,7 +93,7 @@ const Dashboard = () => {
               </Link>
               <Link to="/admin/users">
                 <p>Users</p>
-                <p>2</p>
+                <p>{users && users.length}</p>
               </Link>
             </div>
           </div>

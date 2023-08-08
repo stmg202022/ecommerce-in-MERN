@@ -31,6 +31,24 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAIL,
+
+  //==============ADMIN====================
+  //
+  SINGLE_USER_REQUEST,
+  SINGLE_USER_SUCCESS,
+  SINGLE_USER_FAIL,
+  //
+  ALL_USERS_REQUEST,
+  ALL_USERS_SUCCESS,
+  ALL_USERS_FAIL,
+  //
+  UPDATE_USERS_REQUEST,
+  UPDATE_USERS_SUCCESS,
+  UPDATE_USERS_FAIL,
+  //
+  DELETE_USERS_REQUEST,
+  DELETE_USERS_SUCCESS,
+  DELETE_USERS_FAIL,
   //
   CLEAR_ERRORS,
 } from "../Constants/userConstant";
@@ -332,6 +350,136 @@ export const resetPassword = (token, updateData) => async (dispatch) => {
     });
   }
 };
+
+//=========================================ADMIN PART================================================
+//
+export const getSingleUsers = (id) => async (dispatch) => {
+  try {
+    await dispatch({ type: SINGLE_USER_REQUEST });
+
+    const cookies = document.cookie.split(";");
+    let token = "";
+    cookies.forEach((cookie) => {
+      const [name, value] = cookie.trim().split("=");
+      if (name === "token") {
+        token = value;
+      }
+    });
+
+    const { data } = await axios.get(
+      `http://localhost:8080/api/v1/admin/user/${id}`,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+
+    console.log("All users are", data);
+
+    await dispatch({ type: SINGLE_USER_SUCCESS, payload: data.user });
+  } catch (error) {
+    dispatch({
+      type: SINGLE_USER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//
+export const getAllUsers = () => async (dispatch) => {
+  try {
+    await dispatch({ type: ALL_USERS_REQUEST });
+
+    const cookies = document.cookie.split(";");
+    let token = "";
+    cookies.forEach((cookie) => {
+      const [name, value] = cookie.trim().split("=");
+      if (name === "token") {
+        token = value;
+      }
+    });
+
+    const { data } = await axios.get(
+      "http://localhost:8080/api/v1/admin/users",
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+
+    console.log("All users are", data);
+
+    await dispatch({ type: ALL_USERS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: ALL_USERS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const adminDeleteUser = (id) => async (dispatch) => {
+  try {
+    await dispatch({ type: DELETE_USERS_REQUEST });
+
+    const cookies = document.cookie.split(";");
+    let token = "";
+    cookies.forEach((cookie) => {
+      const [name, value] = cookie.trim().split("=");
+      if (name === "token") {
+        token = value;
+      }
+    });
+
+    const { data } = await axios.delete(
+      `http://localhost:8080/api/v1/admin/delete/user/${id}`,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+
+    await dispatch({ type: DELETE_USERS_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({ type: DELETE_USERS_FAIL, payload: error.response.data.message });
+  }
+};
+
+//
+export const adminUpdateUser = (id, userData) => async (dispatch) => {
+  try {
+    await dispatch({ type: UPDATE_USERS_REQUEST });
+
+    const cookies = document.cookie.split(";");
+    let token = "";
+    cookies.forEach((cookie) => {
+      const [name, value] = cookie.trim().split("=");
+      if (name === "token") {
+        token = value;
+      }
+    });
+
+    const { data } = await axios.put(
+      `http://localhost:8080/api/v1/admin/update/userrole/${id}`,
+      userData,
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+
+    await dispatch({ type: UPDATE_USERS_SUCCESS, payload: data.success });
+  } catch (error) {
+    dispatch({ type: UPDATE_USERS_FAIL, payload: error.response.data.message });
+  }
+};
+
+//=========================================CLEAR ERRORS================================================
+
 //CLEAR-USER-ERRORS
 export const clearUserErrors = () => async (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });

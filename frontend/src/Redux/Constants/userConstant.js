@@ -31,4 +31,26 @@ export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
 export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
 export const RESET_PASSWORD_FAIL = "RESET_PASSWORD_FAIL";
 
+//=========================================ADMIN PART================================================
+
+export const ALL_USERS_REQUEST = "ALL_USERS_REQUEST";
+export const ALL_USERS_SUCCESS = "ALL_USERS_SUCCESS";
+export const ALL_USERS_FAIL = "ALL_USERS_FAIL";
+
+export const UPDATE_USERS_REQUEST = "UPDATE_USER_REQUEST";
+export const UPDATE_USERS_SUCCESS = "UPDATE_USERS_SUCCESS";
+export const UPDATE_USERS_FAIL = "UPDATE_USERS_FAIL";
+export const UPDATE_USERS_RESET = "UPDATE_USERS_RESET";
+
+export const DELETE_USERS_REQUEST = "DELETE_USERS_REQUEST";
+export const DELETE_USERS_SUCCESS = "DELETE_USERS_SUCCESS";
+export const DELETE_USERS_FAIL = "DELETE_USERS_FAIL";
+export const DELETE_USERS_RESET = "DELETE_USERS_RESET";
+
+export const SINGLE_USER_REQUEST = "ALL_USERS_REQUEST";
+export const SINGLE_USER_SUCCESS = "ALL_USERS_SUCCESS";
+export const SINGLE_USER_FAIL = "ALL_USERS_FAIL";
+
+//=========================================CLEAT ERRORS================================================
+
 export const CLEAR_ERRORS = "CLEAR_ERRORS";

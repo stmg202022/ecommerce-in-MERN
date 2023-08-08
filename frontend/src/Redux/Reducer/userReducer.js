@@ -34,6 +34,28 @@ import {
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAIL,
   //
+
+  //==============ADMIN================
+  SINGLE_USER_REQUEST,
+  SINGLE_USER_SUCCESS,
+  SINGLE_USER_FAIL,
+  //
+  ALL_USERS_REQUEST,
+  ALL_USERS_SUCCESS,
+  ALL_USERS_FAIL,
+  //
+  UPDATE_USERS_REQUEST,
+  UPDATE_USERS_SUCCESS,
+  UPDATE_USERS_FAIL,
+  UPDATE_USERS_RESET,
+  //
+  DELETE_USERS_REQUEST,
+  DELETE_USERS_SUCCESS,
+  DELETE_USERS_FAIL,
+  DELETE_USERS_RESET,
+  //
+
+  //
   CLEAR_ERRORS,
 } from "../Constants/userConstant";
 
@@ -182,6 +204,145 @@ export const forgotPasswordReducer = (state = {}, action) => {
         ...state,
         error: null,
       };
+    default:
+      return state;
+  }
+};
+
+// ====================================================ADMIN DAHSBOARD=========================================
+//ADMIN GET SINGLE USER BY ID
+export const getSingleUserReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SINGLE_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case SINGLE_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+      };
+    case SINGLE_USER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+//ADMIN GET ALL USERS
+export const getAllUsersReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case ALL_USERS_REQUEST:
+      return {
+        loading: true,
+        users: [],
+      };
+    case ALL_USERS_SUCCESS:
+      return {
+        loading: false,
+        users: action.payload.users,
+      };
+    case ALL_USERS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+//ADMIN DELETE USER BY ID
+export const deleteUsersReducer = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_USERS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_USERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: action.payload,
+      };
+    case DELETE_USERS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case DELETE_USERS_RESET:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+//ADMIN UPDATE USER BY ID
+export const updateUsersReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_USERS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_USERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isUpdated: action.payload,
+      };
+    case UPDATE_USERS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case UPDATE_USERS_RESET:
+      return {
+        ...state,
+        isUpdated: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
     default:
       return state;
   }

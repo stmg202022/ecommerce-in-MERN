@@ -21,6 +21,10 @@ import {
   userReducer,
   profileReducer,
   forgotPasswordReducer,
+  getSingleUserReducer,
+  getAllUsersReducer,
+  deleteUsersReducer,
+  updateUsersReducer,
 } from "./Redux/Reducer/userReducer";
 
 import {
@@ -53,6 +57,11 @@ const rootReducer = combineReducers({
   allOrders: adminGetAllOrdersReducer,
   updateOrders: adminUpdateOrdersReducer,
   deleteOrders: adminDeleteOrdersReducer,
+  //ADMIN DASHBOARD
+  singleUser: getSingleUserReducer,
+  allUsers: getAllUsersReducer,
+  deleteUser: deleteUsersReducer,
+  updateUser: updateUsersReducer,
 });
 
 let initialState = {

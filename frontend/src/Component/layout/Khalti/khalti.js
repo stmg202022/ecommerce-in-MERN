@@ -151,7 +151,7 @@ const KhaltiPayment = ({ khaltiApiKey }) => {
             <h1>Payment </h1>
 
             <button
-              onClick={() => checkout.show({ amount: totalPrice * 100 })}
+              onClick={() => checkout.show({ amount: totalPrice })}
               className="paybutton"
             >
               Pay via Khalti Rs.{totalPrice}/-
