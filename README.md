@@ -1,2 +1,2 @@
-# CRUD-FROM-VIDEO
-practicing crud operetions project
+# Ecommerce
+practicing MERN operetions project
