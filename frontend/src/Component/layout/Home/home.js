@@ -1,7 +1,6 @@
 import React from "react";
 import "../Home/home.css";
 import Header from "../Header_title/title_header";
-import ContactUsPage from "../Contact/contact";
 // import Features from "../Product/product_features/features";
 // import ProductList from "../Product/product_list.js";
 
@@ -27,16 +26,6 @@ const Home = () => {
 
         <div className="content">
           <ProductList />
-        </div>
-      </div>
-
-      <div>
-        <div>
-          <Header header="Contact Us" />
-        </div>
-
-        <div className="content">
-          <ContactUsPage />
         </div>
       </div>
 

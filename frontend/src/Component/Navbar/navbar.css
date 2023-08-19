@@ -3,6 +3,7 @@
 .navHeader {
   display: flex;
   justify-content: space-between;
+  background-color: var(--maincolor);
 }
 
 .userOptions {
@@ -40,7 +41,7 @@
   align-items: center;
   width: 100%;
   transition: 9000ms;
-
+  background-color: var(--maincolor);
   display: none;
 }
 
@@ -63,8 +64,8 @@
 
 .right-navbar ul li a {
   text-decoration: none;
-  /* color: var(--colorText); */
-  color: black;
+  color: var(--colorText);
+  /* color: black; */
 }
 
 .burger {

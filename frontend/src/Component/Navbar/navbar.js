@@ -50,7 +50,7 @@ import UpdatePassword from "../user/updatePassword/userUpdatePassword.js";
 import UserOptions from "../layout/UserOptions/options";
 
 import { IconContext } from "react-icons";
-import * as CgIcons from "react-icons/cg";
+// import * as CgIcons from "react-icons/cg";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 
@@ -64,6 +64,8 @@ import axios from "axios";
 
 const Navbar = () => {
   const [burger, setBurger] = useState(true);
+
+  const { cartItems } = useSelector((state) => state.cart);
 
   const { isAuthenticated, user } = useSelector((state) => state.users);
   console.log("user==================================", user, isAuthenticated);
@@ -174,20 +176,55 @@ const Navbar = () => {
                           className={item.cName}
                           onClick={showBurger}
                         >
-                          <Link to={item.path}>
+                          {/* <Link to={item.path}>
                             <span>{item.title}</span>
-                          </Link>
+                          </Link> */}
+
+                          {/* {item.title === "Login" ||
+                          item.title === "Cart" ||
+                          item.title === "Search" ? (
+                            <Link to={item.path} style={{ width: "40px" }}>
+                              <span>{item.icon}</span>
+                            </Link>
+                          ) : (
+                            <Link to={item.path}>
+                              <span>{item.title}</span>
+                            </Link>
+                          )} */}
+
+                          {item.title === "Login" || item.title === "Search" ? (
+                            <Link to={item.path} style={{ width: "40px" }}>
+                              <span>{item.icon}</span>
+                            </Link>
+                          ) : item.title === "Cart" ? (
+                            <Link to={item.path}>
+                              <span
+                                style={{
+                                  color:
+                                    cartItems && cartItems.length > 0
+                                      ? "red"
+                                      : "white",
+                                }}
+                              >
+                                {item.icon}
+                              </span>
+                            </Link>
+                          ) : (
+                            <Link to={item.path}>
+                              <span>{item.title}</span>
+                            </Link>
+                          )}
                         </li>
                       );
                     })}
                   </ul>
                 </nav>
               </div>
-              <div style={{ width: "40px" }}>
+              {/* <div>
                 <Link to="products/search" onClick={showBurger}>
                   <CgIcons.CgSearch />
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
           <Routes>
