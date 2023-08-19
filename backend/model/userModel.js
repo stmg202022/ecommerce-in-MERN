@@ -27,6 +27,8 @@ const userSchema = new mongoose.Schema({
   },
 
   avatar: {
+
+    // public_id will be get from cloudinary.v2.uploader
     public_id: {
       type: String,
       required: true,
